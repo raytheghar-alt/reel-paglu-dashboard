@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "rule": "Open with a what-if or contrarian hook — never a hashtag or news announcement",
+    "reason": "What-if hooks (Code to Figma: 22.4K) and identity hooks (India's answer: 19K) massively outperform news hooks (UPI for Agents: 5.2K).",
+    "status": "proven"
+  },
+  {
+    "id": 2,
+    "rule": "Target 31–36 seconds. Never go over 40.",
+    "reason": "All top performers sit in this range. Attention drops after 36s. JioFrames at 41s is a risk.",
+    "status": "proven"
+  },
+  {
+    "id": 3,
+    "rule": "Chase shares and saves, not likes",
+    "reason": "Code to Figma had 406 shares + 435 saves — near equal to likes. Utility reels that people send or bookmark are the best growth lever.",
+    "status": "proven"
+  },
+  {
+    "id": 4,
+    "rule": "Use the India vs West frame whenever possible",
+    "reason": "Two of top 3 reels use this angle. Indian audience responds strongly to 'we built our own version' narratives.",
+    "status": "proven"
+  },
+  {
+    "id": 5,
+    "rule": "Lead with a strong product or screen visual — no plain logo graphics",
+    "reason": "UPI reel used a logo graphic only. All stronger reels had product shots or screen recordings as the visual hook.",
+    "status": "proven"
+  },
+  {
+    "id": 6,
+    "rule": "Use triple short sentences for rhythm at least once per script",
+    "reason": "e.g. 'No studio. No photographer. No budget.' — creates punch and makes it feel spoken, not written.",
+    "status": "proven"
+  },
+  {
+    "id": 7,
+    "rule": "Always end with a debate-inviting question, not a statement",
+    "reason": "Open-ended questions drive comments. Statements close the loop. Keep it open.",
+    "status": "proven"
+  },
+  {
+    "id": 8,
+    "rule": "Avoid fintech, infra, and policy topics unless tied to a design or product angle",
+    "reason": "UPI for Agents (5.2K) shows niche infra topics underperform. Rahul's audience is designers + AI curious, not fintech.",
+    "status": "proven"
+  },
+  {
+    "id": 9,
+    "rule": "No intro. Zero. Straight into the hook from frame 1.",
+    "reason": "Every top reel opens cold. 'Hey guys' or any warm-up kills retention in the first 2 seconds.",
+    "status": "proven"
+  },
+  {
+    "id": 10,
+    "rule": "Drop one specific technical detail per script for credibility",
+    "reason": "Naming the exact tool, model, price, or spec (e.g. '₹10,000', 'Nano Banana model') signals authority and stops vague generalism.",
+    "status": "proven"
+  },
+  {
+    "id": 11,
+    "rule": "Prioritize AI design tools, AI hardware, and India tech narratives as topics",
+    "reason": "Top 3 reels all sit in these categories. This is Rahul's lane and his audience's interest zone.",
+    "status": "proven"
+  },
+  {
+    "id": 12,
+    "rule": "Rate every topic before scripting — only write scripts for topics scoring 7+/10",
+    "reason": "Not every tweet is reel-worthy. Rating filters effort and keeps quality high.",
+    "status": "active"
+  },
+  {
+    "id": 13,
+    "rule": "Use punchy, opinionated language — never soft or hedged",
+    "reason": "'Not generic AI slop' outperforms 'may not look great'. Rahul's audience responds to confidence, not caveats.",
+    "status": "proven"
+  },
+  {
+    "id": 14,
+    "rule": "Script first, audio second, video third — never skip approval gates",
+    "reason": "Each phase costs time and money. Catching issues at script stage is cheapest.",
+    "status": "active"
+  },
+  {
+    "id": 15,
+    "rule": "Always pull source context via X API before writing — never script from memory",
+    "reason": "Fresh data = accurate scripts = credibility. Hallucinated stats destroy trust.",
+    "status": "active"
+  },
+  {
+    "id": 16,
+    "rule": "B-roll links must be attached before sending to Peeyush",
+    "reason": "Editor needs visual references to cut to. No b-roll = slower edit = delayed post.",
+    "status": "active"
+  },
+  {
+    "id": 17,
+    "rule": "High shares-to-views ratio = strong reel. Target >1.5% share rate.",
+    "reason": "Code to Figma: 1.8% share rate. Google 3D print: 3.3% share rate. Both outperformed on distribution.",
+    "status": "learning"
+  },
+  {
+    "id": 18,
+    "rule": "Ride trending topics within 24–48h of breaking — speed is distribution",
+    "reason": "AI news cycles fast. A reel on day 1 of a launch gets algorithm boost. Day 5 is too late.",
+    "status": "active"
+  },
+  {
+    "id": 19,
+    "rule": "Profile activity metric = topic-audience fit. Low profile activity = wrong audience reached.",
+    "reason": "UPI reel: 10 profile visits. Code to Figma: 159. Right topic pulls the right followers.",
+    "status": "learning"
+  },
+  {
+    "id": 20,
+    "rule": "Every 10 reels, review rules and update — kill what's stale, add what's new",
+    "reason": "Algorithms shift, audience evolves. Rules are living documents, not commandments.",
+    "status": "active"
+  }
+]

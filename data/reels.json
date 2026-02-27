@@ -1,16 +1,102 @@
 [
   {
+    "id": "1",
+    "title": "Code to Figma in a single click",
+    "topic": "AI converts code to Figma designs automatically",
+    "status": "posted",
+    "date": "2026-02-19",
+    "duration": 34,
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [],
+    "notes": "Top performer. What-if hook + utility.",
+    "stats": {
+      "views": 22409,
+      "likes": 536,
+      "comments": 14,
+      "shares": 406,
+      "saves": 435,
+      "interactions": 1400,
+      "profile_activity": 159
+    }
+  },
+  {
     "id": "2",
+    "title": "India's answer to Meta glasses",
+    "topic": "Indian alternative to Meta Ray-Ban smart glasses",
+    "status": "posted",
+    "date": "2026-02-18",
+    "duration": 31,
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [],
+    "notes": "Strong India vs West angle.",
+    "stats": {
+      "views": 19039,
+      "likes": 471,
+      "comments": 5,
+      "shares": 279,
+      "saves": 65,
+      "interactions": 827,
+      "profile_activity": 25
+    }
+  },
+  {
+    "id": "3",
+    "title": "Google DeepMind sketch to 3D print",
+    "topic": "Google DeepMind launches sketch-to-3D-print tool",
+    "status": "posted",
+    "date": "2026-02-16",
+    "duration": 36,
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [],
+    "notes": "Curiosity gap hook. High shares.",
+    "stats": {
+      "views": 11648,
+      "likes": 285,
+      "comments": 6,
+      "shares": 385,
+      "saves": 246,
+      "interactions": 927,
+      "profile_activity": 80
+    }
+  },
+  {
+    "id": "4",
+    "title": "UPI for Agents",
+    "topic": "UPI payments integration for AI agents — GFF announcement",
+    "status": "posted",
+    "date": "2026-02-24",
+    "duration": 32,
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [],
+    "notes": "Weakest. News/hashtag hook + niche fintech topic.",
+    "stats": {
+      "views": 5223,
+      "likes": 89,
+      "comments": 2,
+      "shares": 57,
+      "saves": 10,
+      "interactions": 160,
+      "profile_activity": 10
+    }
+  },
+  {
+    "id": "5",
     "title": "JioFrames vs Meta Ray-Ban",
     "topic": "Jio AI glasses under ₹10,000 — the Jio playbook, again",
     "status": "editing",
     "date": "2026-02-27",
+    "duration": 41,
     "audioLink": "",
     "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/60d8df22d35849b4b75601ac8224b295.mp4",
     "brollLinks": [
       "https://www.youtube.com/watch?v=c8MAt4wGf_M",
       "https://www.youtube.com/watch?v=o6xiitRf3Gk"
     ],
-    "notes": "Peeyush editing"
+    "notes": "Peeyush editing. India vs West angle.",
+    "stats": null
   }
 ]
