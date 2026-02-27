@@ -1,0 +1,27 @@
+[
+  {
+    "id": "1",
+    "title": "Claude Auto-Memory",
+    "topic": "Anthropic ships native memory for Claude",
+    "status": "video_done",
+    "date": "2026-02-27",
+    "audioLink": "",
+    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/80149ee1dbe342548552454aa88dde0c.mp4",
+    "brollLinks": [],
+    "notes": "First reel. Pipeline test."
+  },
+  {
+    "id": "2",
+    "title": "JioFrames vs Meta Ray-Ban",
+    "topic": "Jio AI glasses under ₹10,000 — Jio playbook again",
+    "status": "editing",
+    "date": "2026-02-27",
+    "audioLink": "",
+    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/60d8df22d35849b4b75601ac8224b295.mp4",
+    "brollLinks": [
+      "https://www.youtube.com/watch?v=c8MAt4wGf_M",
+      "https://www.youtube.com/watch?v=o6xiitRf3Gk"
+    ],
+    "notes": "Peeyush editing"
+  }
+]
