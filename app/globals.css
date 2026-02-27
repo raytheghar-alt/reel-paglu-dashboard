@@ -1,3 +1,25 @@
 @import "tailwindcss";
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fafafa;
+  --fg: #0a0a0a;
+  --muted: #999;
+  --faint: #ccc;
+  --border: #f0f0f0;
+  --card: #fff;
+  --card-border: #f0f0f0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0a0a0a;
+    --fg: #fafafa;
+    --muted: #666;
+    --faint: #444;
+    --border: #1a1a1a;
+    --card: #111;
+    --card-border: #1e1e1e;
+  }
+}

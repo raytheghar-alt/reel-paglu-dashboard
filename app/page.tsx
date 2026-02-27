@@ -4,8 +4,6 @@ import { useState } from 'react'
 import reelsData from '@/data/reels.json'
 import rulesData from '@/data/rules.json'
 
-type Reel = typeof reelsData[0]
-
 const STATUS_CONFIG: Record<string, { label: string; dot: string }> = {
   pending_script: { label: 'pending script', dot: '#555' },
   script_done:    { label: 'script done',    dot: '#6b8cff' },
@@ -24,21 +22,6 @@ const RULE_STATUS_COLOR: Record<string, string> = {
   learning: '#f59e0b',
 }
 
-const link = {
-  fontSize: '0.6rem',
-  letterSpacing: '0.08em',
-  color: '#0a0a0a',
-  textDecoration: 'none' as const,
-  borderBottom: '1px solid #0a0a0a',
-  paddingBottom: '1px',
-}
-
-const linkMuted = {
-  ...link,
-  color: '#999',
-  borderBottom: '1px solid #ccc',
-}
-
 export default function Home() {
   const [rulesOpen, setRulesOpen] = useState(false)
 
@@ -54,21 +37,21 @@ export default function Home() {
   const avgShareRate = totalViews > 0 ? ((totalShares / totalViews) * 100).toFixed(1) : '0'
 
   return (
-    <main style={{ background: '#fafafa', color: '#0a0a0a', minHeight: '100vh', display: 'flex', flexDirection: 'column', fontFamily: "'Geist Mono', monospace", fontWeight: 300 }}>
+    <main style={{ background: 'var(--bg)', color: 'var(--fg)', minHeight: '100vh', display: 'flex', flexDirection: 'column', fontFamily: "'Geist Mono', monospace", fontWeight: 300 }}>
 
       {/* Header */}
-      <header style={{ padding: '2rem 2.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <header style={{ padding: '2rem 2.5rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontSize: '0.75rem', letterSpacing: '0.08em' }}>reel paglu</span>
-        <span style={{ fontSize: '0.65rem', color: '#999', letterSpacing: '0.06em' }}>rahul + peeyush + ray</span>
+        <span style={{ fontSize: '0.65rem', color: 'var(--muted)', letterSpacing: '0.06em' }}>rahul + peeyush + ray</span>
       </header>
 
       {/* Hero */}
       <section style={{ padding: '5rem 2.5rem 3rem', maxWidth: '900px', width: '100%', margin: '0 auto' }}>
-        <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase' as const, color: '#999' }}>pipeline tracker</span>
+        <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--muted)' }}>pipeline tracker</span>
         <h1 style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: 'clamp(2.4rem, 6vw, 4.5rem)', lineHeight: 1.05, letterSpacing: '-0.02em', marginTop: '1rem' }}>
-          reels in <em style={{ fontStyle: 'italic', color: '#999' }}>motion.</em>
+          reels in <em style={{ fontStyle: 'italic', color: 'var(--muted)' }}>motion.</em>
         </h1>
-        <p style={{ fontSize: '0.7rem', color: '#999', lineHeight: 1.9, marginTop: '1.25rem', maxWidth: '44ch' }}>
+        <p style={{ fontSize: '0.7rem', color: 'var(--muted)', lineHeight: 1.9, marginTop: '1.25rem', maxWidth: '44ch' }}>
           topic in, video out. every reel tracked from script to post.
         </p>
       </section>
@@ -78,7 +61,7 @@ export default function Home() {
         {STATUS_ORDER.map(s => (
           <div key={s} style={{ borderTop: `2px solid ${STATUS_CONFIG[s].dot}`, paddingTop: '1rem' }}>
             <div style={{ fontSize: '1.5rem', fontFamily: "'Instrument Serif', serif", fontWeight: 400 }}>{counts[s]}</div>
-            <div style={{ fontSize: '0.55rem', color: '#999', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginTop: '0.25rem' }}>{STATUS_CONFIG[s].label}</div>
+            <div style={{ fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.25rem' }}>{STATUS_CONFIG[s].label}</div>
           </div>
         ))}
       </section>
@@ -91,42 +74,42 @@ export default function Home() {
           { label: 'total saves', value: totalSaves.toLocaleString() },
           { label: 'avg share rate', value: `${avgShareRate}%` },
         ].map(stat => (
-          <div key={stat.label} style={{ background: '#fff', border: '1px solid #f0f0f0', borderRadius: '8px', padding: '1.25rem' }}>
+          <div key={stat.label} style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '8px', padding: '1.25rem' }}>
             <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.6rem', fontWeight: 400 }}>{stat.value}</div>
-            <div style={{ fontSize: '0.55rem', color: '#999', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginTop: '0.25rem' }}>{stat.label}</div>
+            <div style={{ fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.25rem' }}>{stat.label}</div>
           </div>
         ))}
       </section>
 
       {/* Reel list */}
-      <section style={{ maxWidth: '900px', width: '100%', margin: '0 auto', padding: '0 2.5rem', borderTop: '1px solid #f0f0f0' }}>
+      <section style={{ maxWidth: '900px', width: '100%', margin: '0 auto', padding: '0 2.5rem', borderTop: '1px solid var(--border)' }}>
         <div style={{ paddingTop: '3rem', display: 'flex', flexDirection: 'column' }}>
           {reelsData.map((reel, i) => {
             const status = STATUS_CONFIG[reel.status] ?? { label: reel.status, dot: '#999' }
             return (
-              <div key={reel.id} style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '2rem', padding: '2.5rem 0', borderBottom: '1px solid #f0f0f0' }}>
+              <div key={reel.id} style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '2rem', padding: '2.5rem 0', borderBottom: '1px solid var(--border)' }}>
                 <div style={{ paddingTop: '0.2rem' }}>
-                  <span style={{ fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase' as const, color: '#ccc' }}>#{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--faint)' }}>#{String(i + 1).padStart(2, '0')}</span>
                 </div>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' as const, marginBottom: '0.75rem' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#999' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>
                       <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: status.dot, display: 'inline-block' }} />
                       {status.label}
                     </span>
-                    <span style={{ fontSize: '0.6rem', color: '#ccc' }}>{reel.date}</span>
-                    {reel.duration && <span style={{ fontSize: '0.6rem', color: '#ccc' }}>{reel.duration}s</span>}
+                    <span style={{ fontSize: '0.6rem', color: 'var(--faint)' }}>{reel.date}</span>
+                    {reel.duration && <span style={{ fontSize: '0.6rem', color: 'var(--faint)' }}>{reel.duration}s</span>}
                   </div>
 
                   <h2 style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: '1.6rem', letterSpacing: '-0.01em', lineHeight: 1.1, marginBottom: '0.5rem' }}>
                     {reel.title}
                   </h2>
-                  <p style={{ fontSize: '0.7rem', color: '#999', lineHeight: 1.8, maxWidth: '52ch' }}>{reel.topic}</p>
-                  {reel.notes && <p style={{ fontSize: '0.6rem', color: '#bbb', marginTop: '0.5rem', fontStyle: 'italic' }}>{reel.notes}</p>}
+                  <p style={{ fontSize: '0.7rem', color: 'var(--muted)', lineHeight: 1.8, maxWidth: '52ch' }}>{reel.topic}</p>
+                  {reel.notes && <p style={{ fontSize: '0.6rem', color: 'var(--faint)', marginTop: '0.5rem', fontStyle: 'italic' }}>{reel.notes}</p>}
 
                   {/* Stats */}
                   {reel.stats && (
-                    <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '1.5rem', marginTop: '1.25rem', padding: '1rem', background: '#fff', border: '1px solid #f0f0f0', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1.25rem', padding: '1rem', background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '8px' }}>
                       {[
                         { label: 'views', value: reel.stats.views.toLocaleString() },
                         { label: 'likes', value: reel.stats.likes.toLocaleString() },
@@ -136,18 +119,28 @@ export default function Home() {
                       ].map(s => (
                         <div key={s.label}>
                           <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.1rem', fontWeight: 400 }}>{s.value}</div>
-                          <div style={{ fontSize: '0.5rem', color: '#bbb', letterSpacing: '0.1em', textTransform: 'uppercase' as const }}>{s.label}</div>
+                          <div style={{ fontSize: '0.5rem', color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{s.label}</div>
                         </div>
                       ))}
                     </div>
                   )}
 
                   {/* Links */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '0.75rem', marginTop: '1rem' }}>
-                    {reel.videoLink && <a href={reel.videoLink} target="_blank" rel="noopener noreferrer" style={link}>video ↗</a>}
-                    {reel.audioLink && <a href={reel.audioLink} target="_blank" rel="noopener noreferrer" style={link}>audio ↗</a>}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1rem' }}>
+                    {reel.videoLink && (
+                      <a href={reel.videoLink} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.6rem', letterSpacing: '0.08em', color: 'var(--fg)', textDecoration: 'none', borderBottom: '1px solid var(--fg)', paddingBottom: '1px' }}>
+                        video ↗
+                      </a>
+                    )}
+                    {reel.audioLink && (
+                      <a href={reel.audioLink} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.6rem', letterSpacing: '0.08em', color: 'var(--fg)', textDecoration: 'none', borderBottom: '1px solid var(--fg)', paddingBottom: '1px' }}>
+                        audio ↗
+                      </a>
+                    )}
                     {reel.brollLinks.map((l, j) => (
-                      <a key={j} href={l} target="_blank" rel="noopener noreferrer" style={linkMuted}>b-roll {j + 1} ↗</a>
+                      <a key={j} href={l} target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.6rem', letterSpacing: '0.08em', color: 'var(--muted)', textDecoration: 'none', borderBottom: '1px solid var(--faint)', paddingBottom: '1px' }}>
+                        b-roll {j + 1} ↗
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -161,31 +154,31 @@ export default function Home() {
       <section style={{ maxWidth: '900px', width: '100%', margin: '0 auto', padding: '3rem 2.5rem' }}>
         <button
           onClick={() => setRulesOpen(!rulesOpen)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: 0, width: '100%', textAlign: 'left' as const }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: 0, width: '100%', textAlign: 'left', color: 'var(--fg)' }}
         >
           <span style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: '1.4rem' }}>
             Ray&apos;s {rulesData.length} rules for growth
           </span>
-          <span style={{ fontSize: '0.7rem', color: '#999', transition: 'transform 0.2s', display: 'inline-block', transform: rulesOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▾</span>
+          <span style={{ fontSize: '0.8rem', color: 'var(--muted)', display: 'inline-block', transform: rulesOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▾</span>
         </button>
-        <p style={{ fontSize: '0.65rem', color: '#999', marginTop: '0.5rem' }}>
+        <p style={{ fontSize: '0.65rem', color: 'var(--muted)', marginTop: '0.5rem' }}>
           learned from your data. updated every 10 reels.
         </p>
 
         {rulesOpen && (
           <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column' }}>
             {rulesData.map((rule, i) => (
-              <div key={rule.id} style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: '1.5rem', padding: '1.75rem 0', borderTop: '1px solid #f0f0f0' }}>
-                <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', color: '#ccc', paddingTop: '0.15rem' }}>
+              <div key={rule.id} style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: '1.5rem', padding: '1.75rem 0', borderTop: '1px solid var(--border)' }}>
+                <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', color: 'var(--faint)', paddingTop: '0.15rem' }}>
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.4rem' }}>
                     <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: RULE_STATUS_COLOR[rule.status] ?? '#999', display: 'inline-block', flexShrink: 0 }} />
-                    <span style={{ fontSize: '0.55rem', color: '#bbb', letterSpacing: '0.1em', textTransform: 'uppercase' as const }}>{rule.status}</span>
+                    <span style={{ fontSize: '0.55rem', color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{rule.status}</span>
                   </div>
                   <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.05rem', fontWeight: 400, lineHeight: 1.3, marginBottom: '0.4rem' }}>{rule.rule}</p>
-                  <p style={{ fontSize: '0.62rem', color: '#999', lineHeight: 1.8 }}>{rule.reason}</p>
+                  <p style={{ fontSize: '0.62rem', color: 'var(--muted)', lineHeight: 1.8 }}>{rule.reason}</p>
                 </div>
               </div>
             ))}
@@ -194,9 +187,9 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer style={{ padding: '1.5rem 2.5rem', borderTop: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto' }}>
-        <span style={{ fontSize: '0.6rem', color: '#ccc', letterSpacing: '0.06em' }}>reel paglu — 2026</span>
-        <span style={{ fontSize: '0.6rem', color: '#ccc', letterSpacing: '0.06em' }}>built by ray</span>
+      <footer style={{ padding: '1.5rem 2.5rem', borderTop: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto' }}>
+        <span style={{ fontSize: '0.6rem', color: 'var(--faint)', letterSpacing: '0.06em' }}>reel paglu — 2026</span>
+        <span style={{ fontSize: '0.6rem', color: 'var(--faint)', letterSpacing: '0.06em' }}>built by ray</span>
       </footer>
 
     </main>
