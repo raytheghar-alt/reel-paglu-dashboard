@@ -1,22 +1,20 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata: Metadata = {
-  title: 'Reel Paglu Dashboard',
-  description: 'Rahul + Peeyush + Ray — Full AI reel pipeline tracker',
+  title: 'reel paglu',
+  description: 'Rahul + Peeyush + Ray — full AI reel pipeline',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400&display=swap" rel="stylesheet" />
+      </head>
+      <body style={{ fontFamily: "'Geist Mono', monospace", fontWeight: 300 }}>{children}</body>
     </html>
   )
 }

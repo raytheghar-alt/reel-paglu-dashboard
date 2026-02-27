@@ -1,12 +1,13 @@
 import reels from '@/data/reels.json'
 
-const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
-  pending_script: { label: 'Pending Script', color: 'bg-gray-700 text-gray-300' },
-  script_done: { label: 'Script Done', color: 'bg-blue-900 text-blue-300' },
-  audio_done: { label: 'Audio Done', color: 'bg-purple-900 text-purple-300' },
-  video_done: { label: 'Video Done', color: 'bg-yellow-900 text-yellow-300' },
-  editing: { label: 'Editing', color: 'bg-orange-900 text-orange-300' },
-  posted: { label: 'Posted ✓', color: 'bg-green-900 text-green-300' },
+const STATUS_CONFIG: Record<string, { label: string; dot: string }> = {
+  pending_script: { label: 'pending script', dot: '#555' },
+  script_done:    { label: 'script done',    dot: '#6b8cff' },
+  audio_done:     { label: 'audio done',     dot: '#a78bfa' },
+  video_done:     { label: 'video done',     dot: '#f59e0b' },
+  editing:        { label: 'editing',        dot: '#f97316' },
+  posted:         { label: 'posted',         dot: '#22c55e' },
+  scrapped:       { label: 'scrapped',       dot: '#ef4444' },
 }
 
 const STATUS_ORDER = ['pending_script', 'script_done', 'audio_done', 'video_done', 'editing', 'posted']
@@ -18,71 +19,202 @@ export default function Home() {
   }, {} as Record<string, number>)
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white font-sans px-6 py-10 max-w-5xl mx-auto">
+    <main style={{ background: '#fafafa', color: '#0a0a0a', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+
       {/* Header */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold tracking-tight">🎬 Reel Paglu</h1>
-        <p className="text-gray-400 mt-1 text-sm">Rahul + Peeyush + Ray — Full AI reel pipeline</p>
-      </div>
+      <header style={{
+        padding: '2rem 2.5rem',
+        borderBottom: '1px solid #f0f0f0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}>
+        <span style={{ fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'lowercase' }}>
+          reel paglu
+        </span>
+        <span style={{ fontSize: '0.65rem', color: '#999', letterSpacing: '0.06em' }}>
+          rahul + peeyush + ray
+        </span>
+      </header>
+
+      {/* Hero */}
+      <section style={{
+        padding: '5rem 2.5rem 3rem',
+        maxWidth: '900px',
+        width: '100%',
+        margin: '0 auto',
+      }}>
+        <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#999' }}>
+          pipeline tracker
+        </span>
+        <h1 style={{
+          fontFamily: "'Instrument Serif', serif",
+          fontWeight: 400,
+          fontSize: 'clamp(2.4rem, 6vw, 4.5rem)',
+          lineHeight: 1.05,
+          letterSpacing: '-0.02em',
+          marginTop: '1rem',
+        }}>
+          reels in <em style={{ fontStyle: 'italic', color: '#999' }}>motion.</em>
+        </h1>
+        <p style={{ fontSize: '0.7rem', color: '#999', lineHeight: 1.9, marginTop: '1.25rem', maxWidth: '44ch' }}>
+          topic in, video out. every reel tracked from script to post.
+        </p>
+      </section>
 
       {/* Status counters */}
-      <div className="grid grid-cols-3 md:grid-cols-6 gap-3 mb-10">
+      <section style={{
+        maxWidth: '900px',
+        width: '100%',
+        margin: '0 auto',
+        padding: '0 2.5rem 3rem',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(6, 1fr)',
+        gap: '1rem',
+      }}>
         {STATUS_ORDER.map(s => (
-          <div key={s} className="bg-[#111] rounded-xl p-4 text-center border border-white/5">
-            <div className="text-2xl font-bold">{counts[s]}</div>
-            <div className="text-xs text-gray-500 mt-1">{STATUS_CONFIG[s].label}</div>
+          <div key={s} style={{
+            borderTop: `2px solid ${STATUS_CONFIG[s].dot}`,
+            paddingTop: '1rem',
+          }}>
+            <div style={{ fontSize: '1.5rem', fontFamily: "'Instrument Serif', serif", fontWeight: 400 }}>
+              {counts[s]}
+            </div>
+            <div style={{ fontSize: '0.55rem', color: '#999', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: '0.25rem' }}>
+              {STATUS_CONFIG[s].label}
+            </div>
           </div>
         ))}
-      </div>
+      </section>
 
       {/* Reel list */}
-      <div className="space-y-4">
-        {reels.map(reel => {
-          const status = STATUS_CONFIG[reel.status] ?? { label: reel.status, color: 'bg-gray-700 text-gray-300' }
-          return (
-            <div key={reel.id} className="bg-[#111] border border-white/5 rounded-2xl p-5">
-              <div className="flex items-start justify-between gap-4 flex-wrap">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="text-xs text-gray-500">#{reel.id}</span>
-                    <h2 className="font-semibold text-white">{reel.title}</h2>
-                    <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${status.color}`}>
+      <section style={{
+        maxWidth: '900px',
+        width: '100%',
+        margin: '0 auto',
+        padding: '0 2.5rem 6rem',
+        borderTop: '1px solid #f0f0f0',
+      }}>
+        <div style={{ paddingTop: '3rem', display: 'flex', flexDirection: 'column', gap: '0' }}>
+          {reels.map((reel, i) => {
+            const status = STATUS_CONFIG[reel.status] ?? { label: reel.status, dot: '#999' }
+            return (
+              <div key={reel.id} style={{
+                display: 'grid',
+                gridTemplateColumns: '80px 1fr',
+                gap: '2rem',
+                padding: '2.5rem 0',
+                borderBottom: '1px solid #f0f0f0',
+              }}>
+                {/* Number */}
+                <div style={{ paddingTop: '0.2rem' }}>
+                  <span style={{ fontSize: '0.6rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#ccc' }}>
+                    #{String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div>
+                  {/* Status + date */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                    <span style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      fontSize: '0.6rem',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      color: '#999',
+                    }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: status.dot, display: 'inline-block' }} />
                       {status.label}
                     </span>
+                    <span style={{ fontSize: '0.6rem', color: '#ccc' }}>{reel.date}</span>
                   </div>
-                  <p className="text-sm text-gray-400 mt-1">{reel.topic}</p>
-                  {reel.notes && <p className="text-xs text-gray-600 mt-1 italic">{reel.notes}</p>}
+
+                  {/* Title */}
+                  <h2 style={{
+                    fontFamily: "'Instrument Serif', serif",
+                    fontWeight: 400,
+                    fontSize: '1.6rem',
+                    letterSpacing: '-0.01em',
+                    lineHeight: 1.1,
+                    marginBottom: '0.5rem',
+                  }}>
+                    {reel.title}
+                  </h2>
+
+                  {/* Topic */}
+                  <p style={{ fontSize: '0.7rem', color: '#999', lineHeight: 1.8, maxWidth: '52ch' }}>
+                    {reel.topic}
+                  </p>
+
+                  {/* Notes */}
+                  {reel.notes && (
+                    <p style={{ fontSize: '0.6rem', color: '#bbb', marginTop: '0.5rem', fontStyle: 'italic' }}>
+                      {reel.notes}
+                    </p>
+                  )}
+
+                  {/* Links */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '1.25rem' }}>
+                    {reel.videoLink && (
+                      <a href={reel.videoLink} target="_blank" rel="noopener noreferrer" style={{
+                        fontSize: '0.6rem',
+                        letterSpacing: '0.08em',
+                        color: '#0a0a0a',
+                        textDecoration: 'none',
+                        borderBottom: '1px solid #0a0a0a',
+                        paddingBottom: '1px',
+                      }}>
+                        video ↗
+                      </a>
+                    )}
+                    {reel.audioLink && (
+                      <a href={reel.audioLink} target="_blank" rel="noopener noreferrer" style={{
+                        fontSize: '0.6rem',
+                        letterSpacing: '0.08em',
+                        color: '#0a0a0a',
+                        textDecoration: 'none',
+                        borderBottom: '1px solid #0a0a0a',
+                        paddingBottom: '1px',
+                      }}>
+                        audio ↗
+                      </a>
+                    )}
+                    {reel.brollLinks.map((link, j) => (
+                      <a key={j} href={link} target="_blank" rel="noopener noreferrer" style={{
+                        fontSize: '0.6rem',
+                        letterSpacing: '0.08em',
+                        color: '#999',
+                        textDecoration: 'none',
+                        borderBottom: '1px solid #ccc',
+                        paddingBottom: '1px',
+                      }}>
+                        b-roll {j + 1} ↗
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div className="text-xs text-gray-500 whitespace-nowrap">{reel.date}</div>
               </div>
+            )
+          })}
+        </div>
+      </section>
 
-              {/* Links */}
-              <div className="mt-4 flex flex-wrap gap-3">
-                {reel.videoLink && (
-                  <a href={reel.videoLink} target="_blank" rel="noopener noreferrer"
-                    className="text-xs bg-white/5 hover:bg-white/10 transition px-3 py-1.5 rounded-lg text-gray-300">
-                    🎬 Video
-                  </a>
-                )}
-                {reel.audioLink && (
-                  <a href={reel.audioLink} target="_blank" rel="noopener noreferrer"
-                    className="text-xs bg-white/5 hover:bg-white/10 transition px-3 py-1.5 rounded-lg text-gray-300">
-                    🎙️ Audio
-                  </a>
-                )}
-                {reel.brollLinks.map((link, i) => (
-                  <a key={i} href={link} target="_blank" rel="noopener noreferrer"
-                    className="text-xs bg-white/5 hover:bg-white/10 transition px-3 py-1.5 rounded-lg text-gray-300">
-                    📹 B-Roll {i + 1}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+      {/* Footer */}
+      <footer style={{
+        padding: '1.5rem 2.5rem',
+        borderTop: '1px solid #f0f0f0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 'auto',
+      }}>
+        <span style={{ fontSize: '0.6rem', color: '#ccc', letterSpacing: '0.06em' }}>reel paglu — 2026</span>
+        <span style={{ fontSize: '0.6rem', color: '#ccc', letterSpacing: '0.06em' }}>built by ray</span>
+      </footer>
 
-      <p className="text-center text-xs text-gray-700 mt-12">Updated by Ray on every pipeline run</p>
     </main>
   )
 }
