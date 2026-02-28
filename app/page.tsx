@@ -156,10 +156,10 @@ export default function Home() {
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' as const }}>
             {SORT_OPTIONS.map(opt => (
               <button key={opt.key} onClick={() => setSort(opt.key)} style={{
-                background: 'none', border: 'none', cursor: 'pointer', padding: '0.3rem 0.6rem',
+                cursor: 'pointer', padding: '0.3rem 0.6rem',
                 fontSize: '0.55rem', letterSpacing: '0.08em', textTransform: 'uppercase' as const,
                 color: sort === opt.key ? 'var(--fg)' : 'var(--faint)',
-                background: sort === opt.key ? 'var(--card)' : 'transparent' as any,
+                background: sort === opt.key ? 'var(--card)' : 'transparent',
                 border: `1px solid ${sort === opt.key ? 'var(--card-border)' : 'transparent'}`,
                 borderRadius: '6px',
                 transition: 'all 0.15s',
