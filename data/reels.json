@@ -96,8 +96,16 @@
       "https://www.youtube.com/watch?v=c8MAt4wGf_M",
       "https://www.youtube.com/watch?v=o6xiitRf3Gk"
     ],
-    "notes": "Posted Feb 28. Stats pending.",
-    "stats": null
+    "notes": "4h update. 65.2% non-follower reach. Tracking above avg curve.",
+    "stats": {
+      "views": 578,
+      "likes": 18,
+      "comments": 0,
+      "shares": 2,
+      "saves": 1,
+      "interactions": 21,
+      "profile_activity": 1
+    }
   },
   {
     "id": "6",
