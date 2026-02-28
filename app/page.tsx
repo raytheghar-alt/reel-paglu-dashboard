@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import reelsData from '@/data/reels.json'
 import rulesData from '@/data/rules.json'
 
@@ -22,19 +22,38 @@ const KANBAN_COLS = [
   { key: 'editing',        label: 'editing' },
 ]
 
-const STATUS_ORDER = [...KANBAN_COLS.map(c => c.key), 'posted']
-
 const RULE_STATUS_COLOR: Record<string, string> = {
   proven:   '#22c55e',
   active:   '#6b8cff',
   learning: '#f59e0b',
 }
 
+type SortKey = 'date_desc' | 'date_asc' | 'views_desc' | 'views_asc'
+
+const SORT_OPTIONS: { key: SortKey; label: string }[] = [
+  { key: 'date_desc',  label: 'newest first' },
+  { key: 'date_asc',   label: 'oldest first' },
+  { key: 'views_desc', label: 'most views' },
+  { key: 'views_asc',  label: 'least views' },
+]
+
 export default function Home() {
   const [rulesOpen, setRulesOpen] = useState(false)
+  const [sort, setSort] = useState<SortKey>('date_desc')
 
-  const postedReels = reelsData.filter(r => r.status === 'posted' && r.stats)
+  const sortedPosted = useMemo(() => {
+    const posted = reelsData.filter(r => r.status === 'posted')
+    return [...posted].sort((a, b) => {
+      if (sort === 'date_desc') return b.date.localeCompare(a.date)
+      if (sort === 'date_asc')  return a.date.localeCompare(b.date)
+      if (sort === 'views_desc') return (b.stats?.views ?? 0) - (a.stats?.views ?? 0)
+      if (sort === 'views_asc')  return (a.stats?.views ?? 0) - (b.stats?.views ?? 0)
+      return 0
+    })
+  }, [sort])
+
   const activeReels = reelsData.filter(r => r.status !== 'posted')
+  const postedReels = reelsData.filter(r => r.status === 'posted' && r.stats)
   const totalViews   = postedReels.reduce((a, r) => a + (r.stats?.views   ?? 0), 0)
   const totalShares  = postedReels.reduce((a, r) => a + (r.stats?.shares  ?? 0), 0)
   const totalSaves   = postedReels.reduce((a, r) => a + (r.stats?.saves   ?? 0), 0)
@@ -98,7 +117,7 @@ export default function Home() {
         ))}
       </section>
 
-      {/* ── KANBAN — Active Pipeline ── */}
+      {/* Active Kanban */}
       <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '0 2.5rem 2rem' }}>
         <div style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>active pipeline</span>
@@ -125,14 +144,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Posted — separate section ── */}
+      {/* Posted */}
       <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 2.5rem 4rem', borderTop: '1px solid var(--border)' }}>
-        <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>posted</span>
-          <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>{postedReels.length} reel{postedReels.length !== 1 ? 's' : ''}</span>
+        {/* Section header + sort */}
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap' as const, gap: '1rem', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
+            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>posted</span>
+            <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>{sortedPosted.length} reel{sortedPosted.length !== 1 ? 's' : ''}</span>
+          </div>
+          {/* Sort filters */}
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' as const }}>
+            {SORT_OPTIONS.map(opt => (
+              <button key={opt.key} onClick={() => setSort(opt.key)} style={{
+                background: 'none', border: 'none', cursor: 'pointer', padding: '0.3rem 0.6rem',
+                fontSize: '0.55rem', letterSpacing: '0.08em', textTransform: 'uppercase' as const,
+                color: sort === opt.key ? 'var(--fg)' : 'var(--faint)',
+                background: sort === opt.key ? 'var(--card)' : 'transparent' as any,
+                border: `1px solid ${sort === opt.key ? 'var(--card-border)' : 'transparent'}`,
+                borderRadius: '6px',
+                transition: 'all 0.15s',
+              }}>
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
+
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {reelsData.filter(r => r.status === 'posted').map((reel, i, arr) => (
+          {sortedPosted.map((reel, i, arr) => (
             <div key={reel.id} style={{ display: 'grid', gridTemplateColumns: '60px 1fr', gap: '2rem', padding: '1.75rem 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
               <div style={{ paddingTop: '0.15rem' }}>
                 <span style={{ fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--faint)' }}>#{String(i + 1).padStart(2, '0')}</span>
