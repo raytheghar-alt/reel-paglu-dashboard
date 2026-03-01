@@ -123,7 +123,15 @@
       "https://x.com/i/status/2025135087789154349",
       "https://x.com/i/status/2025173374121681396"
     ],
-    "notes": "Peeyush editing. New avatar. India vs West angle.",
-    "stats": null
+    "notes": "Posted Mar 1. 2h stats: 274 views, 76.8% non-follower. Initial curve above typical. Reels tab 59.7%, Feed 15.2%, Explore 14.7%.",
+    "stats": {
+      "views": 274,
+      "likes": 3,
+      "comments": 0,
+      "shares": 0,
+      "saves": 0,
+      "interactions": 3,
+      "profile_activity": 0
+    }
   }
 ]
