@@ -141,15 +141,15 @@
       "https://x.com/i/status/2025135087789154349",
       "https://x.com/i/status/2025173374121681396"
     ],
-    "notes": "Posted Mar 1. 2h stats: 274 views, 76.8% non-follower. Initial curve above typical. Reels tab 59.7%, Feed 15.2%, Explore 14.7%.",
+    "notes": "Posted Mar 1. ~12h stats: 1,256 views, 78.6% non-follower. Steady climb, still below typical curve but gaining. Watch time 2h 17m.",
     "stats": {
-      "views": 274,
-      "likes": 3,
+      "views": 1256,
+      "likes": 35,
       "comments": 0,
-      "shares": 0,
-      "saves": 0,
-      "interactions": 3,
-      "profile_activity": 0
+      "shares": 8,
+      "saves": 2,
+      "interactions": 45,
+      "profile_activity": 2
     }
   }
 ]
