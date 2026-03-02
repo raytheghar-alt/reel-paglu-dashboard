@@ -108,6 +108,22 @@
     }
   },
   {
+    "id": "8",
+    "title": "Claude Just Made AI Training Free",
+    "topic": "Anthropic free AI courses with certificates — Claude, AI Fluency, MCP, API",
+    "status": "video_done",
+    "date": "2026-03-02",
+    "duration": 33,
+    "audioLink": "",
+    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/0bc057ec72854eb89cee26e4fd44ef44.mp4",
+    "brollLinks": [
+      "https://anthropic.skilljar.com/",
+      "https://x.com/baba_omoloro/status/2028135009098351074"
+    ],
+    "notes": "FOMO hook — companies pay lakhs, Claude made it free. 6.9M impressions on source tweet. Save magnet. Peeyush to edit.",
+    "stats": null
+  },
+  {
     "id": "7",
     "title": "India Blocked Supabase — Here's What to Use Instead",
     "topic": "India blocked Supabase under Section 69A — 3 alternatives for Indian devs",
