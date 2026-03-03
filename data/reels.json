@@ -6,6 +6,7 @@
     "status": "posted",
     "date": "2026-02-19",
     "duration": 34,
+    "content_type": "useful",
     "audioLink": "",
     "videoLink": "",
     "brollLinks": [],
@@ -27,6 +28,7 @@
     "status": "posted",
     "date": "2026-02-18",
     "duration": 31,
+    "content_type": "news",
     "audioLink": "",
     "videoLink": "",
     "brollLinks": [],
@@ -48,6 +50,7 @@
     "status": "posted",
     "date": "2026-02-16",
     "duration": 36,
+    "content_type": "useful",
     "audioLink": "",
     "videoLink": "",
     "brollLinks": [],
@@ -65,10 +68,11 @@
   {
     "id": "4",
     "title": "UPI for Agents",
-    "topic": "UPI payments integration for AI agents \u2014 GFF announcement",
+    "topic": "UPI payments integration for AI agents — GFF announcement",
     "status": "posted",
     "date": "2026-02-24",
     "duration": 32,
+    "content_type": "news",
     "audioLink": "",
     "videoLink": "",
     "brollLinks": [],
@@ -86,10 +90,11 @@
   {
     "id": "5",
     "title": "JioFrames vs Meta Ray-Ban",
-    "topic": "Jio AI glasses under \u20b910,000 \u2014 the Jio playbook, again",
+    "topic": "Jio AI glasses under ₹10,000 — the Jio playbook, again",
     "status": "posted",
     "date": "2026-02-27",
     "duration": 41,
+    "content_type": "news",
     "audioLink": "",
     "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/60d8df22d35849b4b75601ac8224b295.mp4",
     "brollLinks": [
@@ -108,48 +113,31 @@
     }
   },
   {
-    "id": "9",
-    "title": "Companies are paying lakhs for AI training",
-    "topic": "Companies spending crores on AI training — what the job market actually looks like",
+    "id": "6",
+    "title": "Indus AI vs ChatGPT",
+    "topic": "Sarvam's Made-in-India AI — 105B model, 22 languages, free",
     "status": "posted",
-    "date": "2026-03-02",
-    "duration": 24,
+    "date": "2026-03-01",
+    "duration": 38,
+    "content_type": "news",
     "audioLink": "",
-    "videoLink": "",
-    "brollLinks": [],
-    "notes": "12h stats: 6,636 views, 95.3% non-follower. 249 saves, 164 shares. Save:Share ~1.5:1 — bookmark/reference reel. Reels tab 77.2% source. High saves but lower profile activity = 'save for later' type reel.",
-    "stats": {
-      "views": 6636,
-      "likes": 125,
-      "comments": 2,
-      "shares": 164,
-      "saves": 249,
-      "interactions": 543,
-      "profile_activity": 10
-    }
-  },
-  {
-    "id": "8",
-    "title": "Claude Just Made AI Training Free",
-    "topic": "Anthropic free AI courses with certificates — Claude, AI Fluency, MCP, API",
-    "status": "posted",
-    "date": "2026-03-02",
-    "duration": 33,
-    "audioLink": "",
-    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/0bc057ec72854eb89cee26e4fd44ef44.mp4",
+    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/82ff7b75970641f4adc12c3136d14ce2.mp4?Expires=1772904293&Signature=CuunBz6W5~N2UBOQfxK8Z-CP2lULcRlUsglMZlwJ0ot4OrbCs4IBtWROZHhgNZzSsSOdU5BUpS9F9DsRFbmS6IXIo5Vwy-szkK4FAwxG7fz6VOAtGURI6kuvkHdHERmboB5P31oJHkDYQBdNi7VBIEWPMvKBHtsC3u63xyLHrVuIRGxWFZSOuqTPtwgpQJsNtgZI-AZh8iBU1SsMLx3L37CVgqX-Ta~FrrlBur6ynJ~yjonp~-o-WTzDmMaDUjKgXQAlGwiTBPDXmNpu7gRSRFHmL8FuDRksRfelwP1vspk-7kWk4KL9-bKsDhqEGa1WE9~Op0JBJlGAOBlR~ZUH7Q__&Key-Pair-Id=K38HBHX5LX3X2H",
     "brollLinks": [
-      "https://anthropic.skilljar.com/",
-      "https://x.com/baba_omoloro/status/2028135009098351074"
+      "https://www.youtube.com/watch?v=Xc446kt5T0c",
+      "https://www.youtube.com/watch?v=LplYq5ThK9o",
+      "https://www.youtube.com/watch?v=L8LlxtAsitw",
+      "https://x.com/i/status/2025135087789154349",
+      "https://x.com/i/status/2025173374121681396"
     ],
-    "notes": "Posted Mar 2. Caption: Option A (FOMO hook). 3h stats: 502 views, 60.1% non-follower, 25 shares, 15 saves. Tracking WITH typical curve. Stories 26.2% — followers sharing to stories = strong signal.",
+    "notes": "Posted Mar 1. 24h final: 1,999 views, 82.9% non-follower. Steady curve. Reels tab 66.5%, Stories 15.6%.",
     "stats": {
-      "views": 502,
-      "likes": 16,
-      "comments": 2,
-      "shares": 25,
-      "saves": 15,
-      "interactions": 59,
-      "profile_activity": 0
+      "views": 1999,
+      "likes": 53,
+      "comments": 0,
+      "shares": 10,
+      "saves": 10,
+      "interactions": 73,
+      "profile_activity": 6
     }
   },
   {
@@ -159,6 +147,7 @@
     "status": "editing",
     "date": "2026-03-02",
     "duration": 34,
+    "content_type": "useful",
     "audioLink": "",
     "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/cbea63e4426043b2b1284e1b78bce6ff.mp4",
     "brollLinks": [
@@ -171,30 +160,50 @@
     "stats": null
   },
   {
-    "id": "6",
-    "title": "Indus AI vs ChatGPT",
-    "topic": "Sarvam's Made-in-India AI \u2014 105B model, 22 languages, free",
+    "id": "8",
+    "title": "Claude Just Made AI Training Free",
+    "topic": "Anthropic free AI courses with certificates — Claude, AI Fluency, MCP, API",
     "status": "posted",
-    "date": "2026-03-01",
-    "duration": 38,
+    "date": "2026-03-02",
+    "duration": 33,
+    "content_type": "useful",
     "audioLink": "",
-    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/82ff7b75970641f4adc12c3136d14ce2.mp4?Expires=1772904293&Signature=CuunBz6W5~N2UBOQfxK8Z-CP2lULcRlUsglMZlwJ0ot4OrbCs4IBtWROZHhgNZzSsSOdU5BUpS9F9DsRFbmS6IXIo5Vwy-szkK4FAwxG7fz6VOAtGURI6kuvkHdHERmboB5P31oJHkDYQBdNi7VBIEWPMvKBHtsC3u63xyLHrVuIRGxWFZSOuqTPtwgpQJsNtgZI-AZh8iBU1SsMLx3L37CVgqX-Ta~FrrlBur6ynJ~yjonp~-o-WTzDmMaDUjKgXQAlGwiTBPDXmNpu7gRSRFHmL8FuDRksRfelwP1vspk-7kWk4KL9-bKsDhqEGa1WE9~Op0JBJlGAOBlR~ZUH7Q__&Key-Pair-Id=K38HBHX5LX3X2H",
+    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/0bc057ec72854eb89cee26e4fd44ef44.mp4",
     "brollLinks": [
-      "https://www.youtube.com/watch?v=Xc446kt5T0c",
-      "https://www.youtube.com/watch?v=LplYq5ThK9o",
-      "https://www.youtube.com/watch?v=L8LlxtAsitw",
-      "https://x.com/i/status/2025135087789154349",
-      "https://x.com/i/status/2025173374121681396"
+      "https://anthropic.skilljar.com/",
+      "https://x.com/baba_omoloro/status/2028135009098351074"
     ],
-    "notes": "Posted Mar 1. 24h final: 1,999 views, 82.9% non-follower. Curve tracking WITH typical reel line — consistent push. Reels tab 66.5%, Stories 15.6%. Watch time 4h 12m. 10 saves, 10 shares.",
+    "notes": "Posted Mar 2. Caption: FOMO Option A. 3h stats: 502 views, 60.1% non-follower, 25 shares, 15 saves.",
     "stats": {
-      "views": 1999,
-      "likes": 53,
-      "comments": 0,
-      "shares": 10,
-      "saves": 10,
-      "interactions": 73,
-      "profile_activity": 6
+      "views": 502,
+      "likes": 16,
+      "comments": 2,
+      "shares": 25,
+      "saves": 15,
+      "interactions": 59,
+      "profile_activity": 0
+    }
+  },
+  {
+    "id": "9",
+    "title": "Companies are paying lakhs for AI training",
+    "topic": "Companies spending crores on AI training — what the job market actually looks like",
+    "status": "posted",
+    "date": "2026-03-02",
+    "duration": 24,
+    "content_type": "bookmark",
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [],
+    "notes": "12h stats: 6,636 views, 95.3% non-follower. 249 saves, 164 shares. Save:Share ~1.5:1. Reels tab 77.2%. High saves but low profile activity = bookmark reel.",
+    "stats": {
+      "views": 6636,
+      "likes": 125,
+      "comments": 2,
+      "shares": 164,
+      "saves": 249,
+      "interactions": 543,
+      "profile_activity": 10
     }
   }
 ]

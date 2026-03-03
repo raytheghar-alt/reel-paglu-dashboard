@@ -4,6 +4,13 @@ import { useState, useMemo } from 'react'
 import reelsData from '@/data/reels.json'
 import rulesData from '@/data/rules.json'
 
+const CONTENT_TYPE_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  useful:        { label: 'useful',        color: '#6b8cff', bg: 'rgba(107,140,255,0.08)' },
+  news:          { label: 'news',          color: '#f59e0b', bg: 'rgba(245,158,11,0.08)'  },
+  bookmark:      { label: 'bookmark',      color: '#a78bfa', bg: 'rgba(167,139,250,0.08)' },
+  entertainment: { label: 'entertainment', color: '#22c55e', bg: 'rgba(34,197,94,0.08)'   },
+}
+
 const STATUS_CONFIG: Record<string, { label: string; dot: string }> = {
   pending_script: { label: 'todo',     dot: '#555' },
   script_done:    { label: 'script',   dot: '#6b8cff' },
@@ -58,6 +65,28 @@ export default function Home() {
   const totalShares  = postedReels.reduce((a, r) => a + (r.stats?.shares  ?? 0), 0)
   const totalSaves   = postedReels.reduce((a, r) => a + (r.stats?.saves   ?? 0), 0)
   const avgShareRate = totalViews > 0 ? ((totalShares / totalViews) * 100).toFixed(1) : '0'
+
+  // Content type breakdown
+  const typeBreakdown = useMemo(() => {
+    const map: Record<string, { count: number; views: number; saves: number; shares: number }> = {}
+    for (const r of postedReels) {
+      const t = (r as { content_type?: string }).content_type || 'uncategorized'
+      if (!map[t]) map[t] = { count: 0, views: 0, saves: 0, shares: 0 }
+      map[t].count++
+      map[t].views  += r.stats?.views  ?? 0
+      map[t].saves  += r.stats?.saves  ?? 0
+      map[t].shares += r.stats?.shares ?? 0
+    }
+    return map
+  }, [postedReels])
+
+  // Calendar — posted reels sorted by date desc
+  const calendarReels = useMemo(() =>
+    [...reelsData]
+      .filter(r => r.status === 'posted')
+      .sort((a, b) => b.date.localeCompare(a.date)),
+    []
+  )
 
   const link = (muted = false) => ({
     fontSize: '0.6rem', letterSpacing: '0.08em',
@@ -207,6 +236,107 @@ export default function Home() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Content Calendar */}
+      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 2.5rem 3rem', borderTop: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '1.5rem' }}>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>content calendar</span>
+          <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>when + what type</span>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '0.875rem' }}>
+          {calendarReels.map(reel => {
+            const ct = (reel as { content_type?: string }).content_type || 'uncategorized'
+            const cfg = CONTENT_TYPE_CONFIG[ct] ?? { label: ct, color: '#999', bg: 'rgba(150,150,150,0.08)' }
+            return (
+              <div key={reel.id} style={{ background: cfg.bg, border: `1px solid ${cfg.color}22`, borderRadius: '10px', padding: '0.875rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                  <span style={{ fontSize: '0.52rem', color: 'var(--faint)', letterSpacing: '0.08em' }}>{reel.date}</span>
+                  <span style={{ fontSize: '0.5rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: cfg.color, background: `${cfg.color}18`, border: `1px solid ${cfg.color}33`, borderRadius: '999px', padding: '0.1rem 0.45rem' }}>{cfg.label}</span>
+                </div>
+                <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '0.85rem', fontWeight: 400, lineHeight: 1.25, marginBottom: '0.6rem' }}>{reel.title}</p>
+                {reel.stats && (
+                  <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.52rem', color: 'var(--muted)' }}>
+                    <span>👁 {reel.stats.views.toLocaleString()}</span>
+                    <span>💾 {reel.stats.saves}</span>
+                    <span>📤 {reel.stats.shares}</span>
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Content Type Breakdown */}
+      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 2.5rem 3rem', borderTop: '1px solid var(--border)' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.35rem' }}>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>content type breakdown</span>
+        </div>
+        <p style={{ fontSize: '0.6rem', color: 'var(--muted)', marginBottom: '1.5rem' }}>what kind of account are you building?</p>
+
+        {/* Type cards */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          {Object.entries(typeBreakdown).map(([type, stats]) => {
+            const cfg = CONTENT_TYPE_CONFIG[type] ?? { label: type, color: '#999', bg: 'rgba(150,150,150,0.08)' }
+            const pct = Math.round((stats.count / postedReels.length) * 100)
+            return (
+              <div key={type} style={{ background: cfg.bg, border: `1px solid ${cfg.color}33`, borderRadius: '10px', padding: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                  <span style={{ fontSize: '0.52rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: cfg.color }}>{cfg.label}</span>
+                  <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.5rem', color: cfg.color }}>{stats.count}</span>
+                </div>
+                {/* Progress bar */}
+                <div style={{ height: '3px', background: `${cfg.color}20`, borderRadius: '999px', marginBottom: '0.875rem' }}>
+                  <div style={{ height: '3px', width: `${pct}%`, background: cfg.color, borderRadius: '999px' }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '0.3rem', fontSize: '0.55rem', color: 'var(--muted)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>views</span><span style={{ color: 'var(--fg)', fontWeight: 500 }}>{stats.views.toLocaleString()}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>saves</span><span style={{ color: cfg.color, fontWeight: 500 }}>{stats.saves.toLocaleString()}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span>shares</span><span style={{ color: 'var(--fg)', fontWeight: 500 }}>{stats.shares.toLocaleString()}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${cfg.color}22`, paddingTop: '0.3rem', marginTop: '0.1rem' }}>
+                    <span>mix %</span><span style={{ color: cfg.color, fontWeight: 600 }}>{pct}%</span>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Target mix */}
+        <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '10px', padding: '1.25rem' }}>
+          <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: 'var(--muted)', marginBottom: '1rem' }}>target mix</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+            {[
+              { type: 'useful',        target: 40 },
+              { type: 'news',          target: 30 },
+              { type: 'entertainment', target: 20 },
+              { type: 'bookmark',      target: 10 },
+            ].map(({ type, target }) => {
+              const cfg = CONTENT_TYPE_CONFIG[type]
+              const current = typeBreakdown[type] ? Math.round((typeBreakdown[type].count / postedReels.length) * 100) : 0
+              const diff = current - target
+              return (
+                <div key={type} style={{ textAlign: 'center' as const }}>
+                  <div style={{ fontSize: '0.5rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: cfg.color, marginBottom: '0.35rem' }}>{type}</div>
+                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.4rem', color: 'var(--fg)' }}>{current}%</div>
+                  <div style={{ fontSize: '0.5rem', color: 'var(--faint)', marginTop: '0.15rem' }}>target {target}%</div>
+                  {diff !== 0 && (
+                    <div style={{ fontSize: '0.48rem', marginTop: '0.2rem', color: diff > 0 ? '#f59e0b' : '#6b8cff', fontWeight: 600 }}>
+                      {diff > 0 ? `↑ ${diff}% over` : `↓ ${Math.abs(diff)}% under`}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
         </div>
       </section>
 
