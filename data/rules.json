@@ -2,133 +2,61 @@
   {
     "id": 1,
     "rule": "Open with a what-if, contrarian, or FOMO hook — never a hashtag or news announcement",
-    "reason": "What-if hooks (Code to Figma: 22.4K), identity hooks (India's answer: 19K), and FOMO hooks (Claude courses: save magnet) all outperform news openers (UPI: 5.2K). FOMO angle added from Anthropic reel.",
+    "reason": "What-if (Code to Figma: 22.4K), identity (India's answer: 19K), FOMO all beat news openers (UPI: 5.2K). The hook is the reel.",
     "status": "proven"
   },
   {
     "id": 2,
-    "rule": "Target 31–36 seconds. Never go over 38.",
-    "reason": "JioFrames at 41s underperformed vs potential. Indus at 38s got consistent push but lower peak. Sub-34s reels (Supabase 32s, Claude 33s) are the new target.",
-    "status": "proven"
-  },
-  {
-    "id": 3,
-    "rule": "Chase saves and shares, not likes. Saves = algorithm fuel.",
-    "reason": "Code to Figma: 435 saves, 406 shares = 22.4K views. Indus: 10 saves, 10 shares = steady curve. Saves:views ratio is the best signal. Claude reel built explicitly as a save magnet.",
-    "status": "proven"
-  },
-  {
-    "id": 4,
-    "rule": "Use the India vs West frame whenever possible",
-    "reason": "Top 3 organic reels use this angle. Indus AI (1,999 views), India's Meta glasses (19K), JioFrames (2,954) all India-framed. Even Supabase block is an India story.",
-    "status": "proven"
-  },
-  {
-    "id": 5,
-    "rule": "Lead with a strong product or screen visual — no plain logo graphics",
-    "reason": "UPI reel used logo only = 5.2K. All stronger reels had product shots, screen recordings, or app UI. B-roll quality directly impacts retention.",
-    "status": "proven"
-  },
-  {
-    "id": 6,
-    "rule": "Use triple short sentences for rhythm at least once per script",
-    "reason": "Creates punch and makes it feel spoken, not written. e.g. 'No studio. No photographer. No budget.' or 'No warning. No reason. Just gone.'",
-    "status": "proven"
-  },
-  {
-    "id": 7,
-    "rule": "End utility reels with a direct save CTA. End opinion reels with a debate-inviting question.",
-    "reason": "Utility reels (Claude courses, Supabase alternatives) need 'save this' at the end. Opinion/identity reels (Indus, JioFrames) need an open question. Match CTA to content type.",
-    "status": "proven"
-  },
-  {
-    "id": 8,
-    "rule": "Avoid fintech, infra, and policy topics unless tied to a design or product angle",
-    "reason": "UPI for Agents (5.2K) = niche infra. Supabase block works because it's a developer tool story, not a policy story. Always find the product/people angle.",
-    "status": "proven"
-  },
-  {
-    "id": 9,
     "rule": "No intro. Zero. Straight into the hook from frame 1.",
     "reason": "Every top reel opens cold. Any warm-up kills retention in the first 2 seconds.",
     "status": "proven"
   },
   {
-    "id": 10,
-    "rule": "Drop one specific technical detail or number per script for credibility",
-    "reason": "'105 billion parameter model', '₹10,000', 'Section 69A', 'zero rupees' — specifics signal authority and stop vague generalism.",
+    "id": 3,
+    "rule": "Target 31–36 seconds. Never go over 38.",
+    "reason": "JioFrames at 41s underperformed. Indus at 38s got steady push but lower peak. Sweet spot is 31–36s.",
     "status": "proven"
   },
   {
-    "id": 11,
-    "rule": "Prioritize AI design tools, AI hardware, India tech narratives, and utility resource reels",
-    "reason": "Top reels all sit in these categories. Utility resource reels (Claude courses, Supabase alternatives) are now confirmed as a fourth strong lane — save magnets.",
+    "id": 4,
+    "rule": "Chase saves and shares, not likes — but watch profile_activity as the real growth signal",
+    "reason": "Code to Figma: 435 saves, 159 profile visits = growth. Companies paying lakhs: 249 saves, 10 profile visits = reach but no growth. Saves fuel the algorithm; profile_activity converts to followers.",
     "status": "proven"
   },
   {
-    "id": 12,
-    "rule": "Rate every topic before scripting — only write scripts for topics scoring 7+/10",
-    "reason": "Not every tweet is reel-worthy. Rating filters effort and keeps quality high.",
-    "status": "active"
-  },
-  {
-    "id": 13,
-    "rule": "Use punchy, opinionated language — never soft or hedged",
-    "reason": "'India can't touch it without blocking Google' outperforms 'may be harder to block'. Rahul's audience responds to confidence, not caveats.",
+    "id": 5,
+    "rule": "Use the India vs West frame whenever possible",
+    "reason": "Top 3 organic reels use this angle — India's Meta glasses (19K), Code to Figma (22.4K design narrative), JioFrames. India-framed reels consistently outperform pure tech announcements.",
     "status": "proven"
   },
   {
-    "id": 14,
-    "rule": "Script first, audio second, video third — never skip approval gates",
-    "reason": "Each phase costs time and money. Catching issues at script stage is cheapest. Proven after multiple iterations on Indus + Supabase reels.",
-    "status": "active"
-  },
-  {
-    "id": 15,
-    "rule": "Always pull source context via X API before writing — never script from memory",
-    "reason": "Fresh data = accurate scripts = credibility. Also reveals engagement signals (6.9M impressions on Claude tweet = topic has legs).",
-    "status": "active"
-  },
-  {
-    "id": 16,
-    "rule": "B-roll links must be attached before sending to Peeyush — include edit flow notes",
-    "reason": "Editor needs visual references AND timing notes to cut efficiently. No b-roll = slower edit = delayed post.",
-    "status": "active"
-  },
-  {
-    "id": 17,
-    "rule": "Target >1.5% share rate and >0.5% save rate",
-    "reason": "Code to Figma: 1.8% shares, 1.9% saves. Google 3D print: 3.3% shares. Indus: 0.5% shares/saves. Low share rate = algorithm won't push. Saves matter more than likes.",
+    "id": 6,
+    "rule": "Lead with a strong product or screen visual — no plain logo graphics",
+    "reason": "UPI reel was logo-only = 5.2K. Every strong reel had product shots, screen recordings, or app UI. B-roll quality directly impacts retention.",
     "status": "proven"
   },
   {
-    "id": 18,
+    "id": 7,
+    "rule": "Use punchy, opinionated language + triple short sentences for rhythm",
+    "reason": "'India can't touch it without blocking Google' beats 'may be harder to block'. Triple rhythm: 'No studio. No photographer. No budget.' — makes it feel spoken, not written.",
+    "status": "proven"
+  },
+  {
+    "id": 8,
+    "rule": "End utility reels with a save CTA. End opinion reels with a debate question.",
+    "reason": "Match the CTA to the content type. Utility = 'save this'. Opinion/identity = open question that invites debate. Wrong CTA wastes the setup.",
+    "status": "proven"
+  },
+  {
+    "id": 9,
     "rule": "Ride trending topics within 24–48h of breaking — speed is distribution",
-    "reason": "Claude courses tweet was 6.9M impressions day 1. Supabase block was 2 days old. Both had runway. Day 5+ is too late.",
+    "reason": "Supabase block was 2 days old and still had runway. Day 5+ is too late. Speed to publish is a competitive advantage, not just good practice.",
+    "status": "proven"
+  },
+  {
+    "id": 10,
+    "rule": "Balance content types — don't become a 'save for later' account",
+    "reason": "High saves without profile activity = people hoarding, not following. Target mix: ~40% useful, ~30% news, ~20% entertainment, ~10% bookmark. Mix keeps active viewers, not just collectors.",
     "status": "active"
-  },
-  {
-    "id": 19,
-    "rule": "Steady curve > spike-then-plateau. Aim for consistent algorithm push over 24h+",
-    "reason": "JioFrames spiked at 12h then died (2,954 total). Indus grew steadily and tracked WITH typical reel curve (1,999, still moving). Retention quality beats early spike.",
-    "status": "learning"
-  },
-  {
-    "id": 20,
-    "rule": "Caption style matters — log which caption type was used for every reel",
-    "reason": "Started tracking Mar 2 (Claude reel: FOMO Option A). Need 5+ data points to know if FOMO vs contrarian vs punchy captions drive more saves. Treat captions as a variable.",
-    "status": "learning"
-  },
-  {
-    "id": 21,
-    "rule": "Don't become a 'save for later' account — balance content types",
-    "reason": "'Companies paying lakhs' got 249 saves but only 10 profile visits. High saves = people hoarding, not converting to followers. Mix bookmark reels with useful/entertaining ones that keep active viewers. Target: ~40% useful, ~30% news, ~20% entertainment, ~10% bookmark.",
-    "status": "active"
-  },
-  {
-    "id": 22,
-    "rule": "High saves ≠ high growth. Watch profile_activity as the growth signal.",
-    "reason": "Code to Figma: 159 profile visits (real growth). Companies paying lakhs: 10 profile visits despite 249 saves. Saves fuel algorithm reach but profile_activity converts to followers. Need both.",
-    "status": "learning"
   }
 ]
