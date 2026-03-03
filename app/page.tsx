@@ -115,6 +115,16 @@ export default function Home() {
   const totalSaves  = postedReels.reduce((a, r) => a + (r.stats?.saves  ?? 0), 0)
   const avgShareRate = totalViews > 0 ? ((totalShares / totalViews) * 100).toFixed(1) : '0'
 
+  // Cost calculations
+  // ElevenLabs: eleven_turbo_v2_5 = 0.5 credits/char. Creator plan $22/mo = 100K credits → $0.00022/credit. ~500 chars/script = $0.055
+  // HeyGen: Avatar IV = 1 credit per 10s. Pro plan $99/mo = 100 credits → $0.99/credit. ~30s reel = 3 credits = $2.97
+  const COST_ELEVENLABS = 0.055
+  const COST_HEYGEN = 2.97
+  const COST_PER_REEL = COST_ELEVENLABS + COST_HEYGEN
+  const allReels = reelsData.filter(r => r.status !== 'pending_script')
+  const totalCost = (allReels.length * COST_PER_REEL).toFixed(2)
+  const totalCostPosted = (postedReels.length * COST_PER_REEL).toFixed(2)
+
   const typeBreakdown = useMemo(() => {
     const map: Record<string, { count: number; views: number; saves: number; shares: number }> = {}
     for (const r of postedReels) {
@@ -193,6 +203,47 @@ export default function Home() {
             <div style={{ fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginTop: '0.25rem' }}>{stat.label}</div>
           </div>
         ))}
+      </section>
+
+      {/* Cost Section */}
+      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '0 2.5rem 2rem' }}>
+        <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '12px', padding: '1.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap' as const, gap: '0.5rem', marginBottom: '1.25rem' }}>
+            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.1rem' }}>cost per reel</span>
+            <span style={{ fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.06em' }}>elevenlabs + heygen</span>
+          </div>
+
+          {/* Per reel breakdown */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
+            {[
+              { label: 'ElevenLabs / reel', value: `$${COST_ELEVENLABS.toFixed(3)}`, sub: 'turbo_v2_5 · ~500 chars · 0.5 cr/char', color: '#6b8cff' },
+              { label: 'HeyGen / reel', value: `$${COST_HEYGEN.toFixed(2)}`, sub: 'Avatar IV · ~30s · 3 credits @ $0.99', color: '#a78bfa' },
+              { label: 'Total / reel', value: `$${COST_PER_REEL.toFixed(2)}`, sub: '≈ ₹250 per reel', color: '#22c55e' },
+            ].map(item => (
+              <div key={item.label} style={{ background: 'var(--bg)', border: '1px solid var(--border)', borderRadius: '8px', padding: '1rem' }}>
+                <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.4rem', color: item.color }}>{item.value}</div>
+                <div style={{ fontSize: '0.55rem', color: 'var(--muted)', letterSpacing: '0.08em', textTransform: 'uppercase' as const, marginTop: '0.2rem' }}>{item.label}</div>
+                <div style={{ fontSize: '0.5rem', color: 'var(--faint)', marginTop: '0.3rem' }}>{item.sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Total spend */}
+          <div style={{ borderTop: '1px solid var(--border)', paddingTop: '1rem', display: 'flex', gap: '2rem', flexWrap: 'wrap' as const }}>
+            {[
+              { label: `total spent (${allReels.length} reels made)`, value: `$${totalCost}` },
+              { label: `posted reels only (${postedReels.length})`, value: `$${totalCostPosted}` },
+              { label: 'heygen plan', value: '$99 / mo', sub: '100 credits' },
+              { label: 'elevenlabs plan', value: '$22 / mo', sub: '100K credits' },
+            ].map(item => (
+              <div key={item.label}>
+                <div style={{ fontSize: '0.9rem', fontFamily: "'Instrument Serif', serif" }}>{item.value}</div>
+                <div style={{ fontSize: '0.5rem', color: 'var(--faint)', letterSpacing: '0.08em', textTransform: 'uppercase' as const, marginTop: '0.15rem' }}>{item.label}</div>
+                {'sub' in item && <div style={{ fontSize: '0.48rem', color: 'var(--faint)' }}>{item.sub}</div>}
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Active Pipeline */}
