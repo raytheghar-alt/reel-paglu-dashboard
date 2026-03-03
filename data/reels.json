@@ -160,31 +160,6 @@
     "stats": null
   },
   {
-    "id": "8",
-    "title": "Claude Just Made AI Training Free",
-    "topic": "Anthropic free AI courses with certificates — Claude, AI Fluency, MCP, API",
-    "status": "posted",
-    "date": "2026-03-02",
-    "duration": 33,
-    "content_type": "useful",
-    "audioLink": "",
-    "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/0bc057ec72854eb89cee26e4fd44ef44.mp4",
-    "brollLinks": [
-      "https://anthropic.skilljar.com/",
-      "https://x.com/baba_omoloro/status/2028135009098351074"
-    ],
-    "notes": "Posted Mar 2. Caption: FOMO Option A. 3h stats: 502 views, 60.1% non-follower, 25 shares, 15 saves.",
-    "stats": {
-      "views": 502,
-      "likes": 16,
-      "comments": 2,
-      "shares": 25,
-      "saves": 15,
-      "interactions": 59,
-      "profile_activity": 0
-    }
-  },
-  {
     "id": "9",
     "title": "Companies are paying lakhs for AI training",
     "topic": "Companies spending crores on AI training — what the job market actually looks like",
