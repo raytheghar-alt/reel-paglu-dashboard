@@ -108,6 +108,27 @@
     }
   },
   {
+    "id": "9",
+    "title": "Companies are paying lakhs for AI training",
+    "topic": "Companies spending crores on AI training — what the job market actually looks like",
+    "status": "posted",
+    "date": "2026-03-02",
+    "duration": 24,
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [],
+    "notes": "12h stats: 6,636 views, 95.3% non-follower. 249 saves, 164 shares. Save:Share ~1.5:1 — bookmark/reference reel. Reels tab 77.2% source. High saves but lower profile activity = 'save for later' type reel.",
+    "stats": {
+      "views": 6636,
+      "likes": 125,
+      "comments": 2,
+      "shares": 164,
+      "saves": 249,
+      "interactions": 543,
+      "profile_activity": 10
+    }
+  },
+  {
     "id": "8",
     "title": "Claude Just Made AI Training Free",
     "topic": "Anthropic free AI courses with certificates — Claude, AI Fluency, MCP, API",

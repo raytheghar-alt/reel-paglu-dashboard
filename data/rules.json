@@ -118,5 +118,17 @@
     "rule": "Caption style matters — log which caption type was used for every reel",
     "reason": "Started tracking Mar 2 (Claude reel: FOMO Option A). Need 5+ data points to know if FOMO vs contrarian vs punchy captions drive more saves. Treat captions as a variable.",
     "status": "learning"
+  },
+  {
+    "id": 21,
+    "rule": "Don't become a 'save for later' account — balance content types",
+    "reason": "'Companies paying lakhs' got 249 saves but only 10 profile visits. High saves = people hoarding, not converting to followers. Mix bookmark reels with useful/entertaining ones that keep active viewers. Target: ~40% useful, ~30% news, ~20% entertainment, ~10% bookmark.",
+    "status": "active"
+  },
+  {
+    "id": 22,
+    "rule": "High saves ≠ high growth. Watch profile_activity as the growth signal.",
+    "reason": "Code to Figma: 159 profile visits (real growth). Companies paying lakhs: 10 profile visits despite 249 saves. Saves fuel algorithm reach but profile_activity converts to followers. Need both.",
+    "status": "learning"
   }
 ]
