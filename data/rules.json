@@ -19,8 +19,8 @@
   },
   {
     "id": 4,
-    "rule": "Chase saves and shares, not likes — but watch profile_activity as the real growth signal",
-    "reason": "Code to Figma: 435 saves, 159 profile visits = growth. Companies paying lakhs: 249 saves, 10 profile visits = reach but no growth. Saves fuel the algorithm; profile_activity converts to followers.",
+    "rule": "Chase saves AND shares together — that combo triggers the algorithm at scale",
+    "reason": "Companies paying lakhs 24h final: 745 saves + 625 shares = 20,646 views + 47 follows. Saves + shares together = algorithm goes full push. Saves alone = reach. Saves + shares = viral growth + real follows.",
     "status": "proven"
   },
   {
