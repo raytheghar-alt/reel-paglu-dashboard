@@ -1,5 +1,23 @@
 [
   {
+    "id": "10",
+    "title": "Your phone is about to become the dumbest thing you own",
+    "topic": "Qualcomm Snapdragon Wear Elite — on-device AI on your wrist, end of the phone era",
+    "status": "script_done",
+    "date": "2026-03-03",
+    "duration": 26,
+    "content_type": "news",
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [
+      "https://www.zdnet.com/article/qualcomm-snapdragon-wear-elite-chip-samsung-google-ai-mwc-2026/",
+      "https://www.qualcomm.com/news/releases/2026/03/qualcomm-powers-the-rise-of-personal-ai-with-new-snapdragon-wear",
+      "https://www.deccanherald.com/technology/snapdragon-wear-elite-at-mwc-2026-10-key-features-you-should-know-about-qualcomms-new-chipset-for-ai-wearables-3917136"
+    ],
+    "notes": "Hook: 'Your phone is about to become the dumbest thing you own.' Contrarian + end of device era angle. Visual: wearable shots — watch, pin, glasses. Talking head in corner. CTA: debate question.",
+    "stats": null
+  },
+  {
     "id": "1",
     "title": "Code to Figma in a single click",
     "topic": "AI converts code to Figma designs automatically",
