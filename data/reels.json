@@ -178,11 +178,11 @@
   },
   {
     "id": "7",
-    "title": "India Blocked Supabase — Here's What to Use Instead",
+    "title": "Don't depend on one backend for your work",
     "topic": "India blocked Supabase under Section 69A — 3 alternatives for Indian devs",
-    "status": "editing",
-    "date": "2026-03-02",
-    "duration": 34,
+    "status": "posted",
+    "date": "2026-03-03",
+    "duration": 26,
     "content_type": "useful",
     "audioLink": "",
     "videoLink": "https://files2.heygen.ai/aws_pacific/avatar_tmp/de8536d9fb80479781cf6899ec126b3b/cbea63e4426043b2b1284e1b78bce6ff.mp4",
@@ -192,8 +192,16 @@
       "https://www.reddit.com/r/Supabase/comments/1rgerhu/supabase_blocked_in_india_confirmed/",
       "https://techcrunch.com/2026/02/27/india-disrupts-access-to-popular-developer-platform-supabase-with-blocking-order/"
     ],
-    "notes": "Utility angle — India blocked Supabase, alternatives reel. Save trigger at end. Approved Mar 2. Peeyush to edit.",
-    "stats": null
+    "notes": "3h stats: 444 views, 59.4% non-follower, 20 likes, 5 saves, 1 share. Tracking BELOW typical curve. Low retention (5.4s avg on 26s reel). 0 profile activity. Check 12h.",
+    "stats": {
+      "views": 444,
+      "likes": 20,
+      "comments": 2,
+      "shares": 1,
+      "saves": 5,
+      "interactions": 28,
+      "profile_activity": 0
+    }
   },
   {
     "id": "9",
