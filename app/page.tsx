@@ -44,15 +44,64 @@ const SORT_OPTIONS: { key: SortKey; label: string }[] = [
   { key: 'views_asc',  label: 'least views' },
 ]
 
+function Chevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      width="14" height="14" viewBox="0 0 14 14" fill="none"
+      style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}
+    >
+      <path d="M2.5 5L7 9.5L11.5 5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function SectionHeader({
+  title, subtitle, open, onToggle, right
+}: {
+  title: React.ReactNode
+  subtitle?: React.ReactNode
+  open: boolean
+  onToggle: () => void
+  right?: React.ReactNode
+}) {
+  return (
+    <button
+      onClick={onToggle}
+      style={{
+        width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        gap: '1rem', background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+        color: 'var(--fg)', textAlign: 'left' as const,
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', flex: 1, minWidth: 0 }}>
+        <span style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: '1.2rem' }}>{title}</span>
+        {subtitle && <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>{subtitle}</span>}
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--muted)', flexShrink: 0 }}>
+        {right}
+        <Chevron open={open} />
+      </div>
+    </button>
+  )
+}
+
 export default function Home() {
-  const [rulesOpen, setRulesOpen] = useState(false)
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({
+    pipeline: true,
+    posted: true,
+    calendar: false,
+    breakdown: false,
+    rules: false,
+  })
   const [sort, setSort] = useState<SortKey>('date_desc')
+
+  const toggle = (key: string) => setOpenSections(prev => ({ ...prev, [key]: !prev[key] }))
 
   const sortedPosted = useMemo(() => {
     const posted = reelsData.filter(r => r.status === 'posted')
     return [...posted].sort((a, b) => {
-      if (sort === 'date_desc') return b.date.localeCompare(a.date)
-      if (sort === 'date_asc')  return a.date.localeCompare(b.date)
+      if (sort === 'date_desc')  return b.date.localeCompare(a.date)
+      if (sort === 'date_asc')   return a.date.localeCompare(b.date)
       if (sort === 'views_desc') return (b.stats?.views ?? 0) - (a.stats?.views ?? 0)
       if (sort === 'views_asc')  return (a.stats?.views ?? 0) - (b.stats?.views ?? 0)
       return 0
@@ -61,12 +110,11 @@ export default function Home() {
 
   const activeReels = reelsData.filter(r => r.status !== 'posted')
   const postedReels = reelsData.filter(r => r.status === 'posted' && r.stats)
-  const totalViews   = postedReels.reduce((a, r) => a + (r.stats?.views   ?? 0), 0)
-  const totalShares  = postedReels.reduce((a, r) => a + (r.stats?.shares  ?? 0), 0)
-  const totalSaves   = postedReels.reduce((a, r) => a + (r.stats?.saves   ?? 0), 0)
+  const totalViews  = postedReels.reduce((a, r) => a + (r.stats?.views  ?? 0), 0)
+  const totalShares = postedReels.reduce((a, r) => a + (r.stats?.shares ?? 0), 0)
+  const totalSaves  = postedReels.reduce((a, r) => a + (r.stats?.saves  ?? 0), 0)
   const avgShareRate = totalViews > 0 ? ((totalShares / totalViews) * 100).toFixed(1) : '0'
 
-  // Content type breakdown
   const typeBreakdown = useMemo(() => {
     const map: Record<string, { count: number; views: number; saves: number; shares: number }> = {}
     for (const r of postedReels) {
@@ -80,7 +128,6 @@ export default function Home() {
     return map
   }, [postedReels])
 
-  // Calendar — posted reels sorted by date desc
   const calendarReels = useMemo(() =>
     [...reelsData]
       .filter(r => r.status === 'posted')
@@ -88,7 +135,7 @@ export default function Home() {
     []
   )
 
-  const link = (muted = false) => ({
+  const linkStyle = (muted = false) => ({
     fontSize: '0.6rem', letterSpacing: '0.08em',
     color: muted ? 'var(--muted)' : 'var(--fg)',
     textDecoration: 'none' as const,
@@ -107,12 +154,14 @@ export default function Home() {
       </div>
       {(reel.videoLink || (reel.brollLinks?.length ?? 0) > 0) && (
         <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid var(--border)', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' as const }}>
-          {reel.videoLink && <a href={reel.videoLink} target="_blank" rel="noopener noreferrer" style={link()}>video ↗</a>}
-          {reel.brollLinks?.slice(0, 2).map((l, j) => <a key={j} href={l} target="_blank" rel="noopener noreferrer" style={link(true)}>b-roll {j + 1} ↗</a>)}
+          {reel.videoLink && <a href={reel.videoLink} target="_blank" rel="noopener noreferrer" style={linkStyle()}>video ↗</a>}
+          {reel.brollLinks?.slice(0, 2).map((l, j) => <a key={j} href={l} target="_blank" rel="noopener noreferrer" style={linkStyle(true)}>b-roll {j + 1} ↗</a>)}
         </div>
       )}
     </div>
   )
+
+  const sectionStyle = { maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '1.75rem 2.5rem', borderTop: '1px solid var(--border)' }
 
   return (
     <main style={{ background: 'var(--bg)', color: 'var(--fg)', minHeight: '100vh', display: 'flex', flexDirection: 'column', fontFamily: "'Geist Mono', monospace", fontWeight: 300 }}>
@@ -146,226 +195,243 @@ export default function Home() {
         ))}
       </section>
 
-      {/* Active Kanban */}
-      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '0 2.5rem 2rem' }}>
-        <div style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>active pipeline</span>
-          <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>{activeReels.length} reel{activeReels.length !== 1 ? 's' : ''}</span>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${KANBAN_COLS.length}, minmax(180px, 1fr))`, gap: '1rem', overflowX: 'auto' }}>
-          {KANBAN_COLS.map(col => {
-            const colReels = reelsData.filter(r => r.status === col.key)
-            return (
-              <div key={col.key}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', paddingBottom: '0.75rem', borderBottom: `2px solid ${STATUS_CONFIG[col.key].dot}` }}>
-                  <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--muted)' }}>{col.label}</span>
-                  <span style={{ fontSize: '0.55rem', color: 'var(--faint)', background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '999px', padding: '0 0.4rem', lineHeight: '1.6' }}>{colReels.length}</span>
+      {/* Active Pipeline */}
+      <section style={sectionStyle}>
+        <SectionHeader
+          title="active pipeline"
+          subtitle={`${activeReels.length} reel${activeReels.length !== 1 ? 's' : ''}`}
+          open={openSections.pipeline}
+          onToggle={() => toggle('pipeline')}
+        />
+        {openSections.pipeline && (
+          <div style={{ marginTop: '1.5rem', display: 'grid', gridTemplateColumns: `repeat(${KANBAN_COLS.length}, minmax(180px, 1fr))`, gap: '1rem', overflowX: 'auto' }}>
+            {KANBAN_COLS.map(col => {
+              const colReels = reelsData.filter(r => r.status === col.key)
+              return (
+                <div key={col.key}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem', paddingBottom: '0.75rem', borderBottom: `2px solid ${STATUS_CONFIG[col.key].dot}` }}>
+                    <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--muted)' }}>{col.label}</span>
+                    <span style={{ fontSize: '0.55rem', color: 'var(--faint)', background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '999px', padding: '0 0.4rem', lineHeight: '1.6' }}>{colReels.length}</span>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {colReels.length === 0
+                      ? <div style={{ border: '1px dashed var(--border)', borderRadius: '8px', padding: '1rem', fontSize: '0.6rem', color: 'var(--faint)', textAlign: 'center' as const }}>empty</div>
+                      : colReels.map(reel => <KanbanCard key={reel.id} reel={reel} />)
+                    }
+                  </div>
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {colReels.length === 0
-                    ? <div style={{ border: '1px dashed var(--border)', borderRadius: '8px', padding: '1rem', fontSize: '0.6rem', color: 'var(--faint)', textAlign: 'center' as const }}>empty</div>
-                    : colReels.map(reel => <KanbanCard key={reel.id} reel={reel} />)
-                  }
-                </div>
-              </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+        )}
       </section>
 
       {/* Posted */}
-      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 2.5rem 4rem', borderTop: '1px solid var(--border)' }}>
-        {/* Section header + sort */}
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap' as const, gap: '1rem', marginBottom: '1.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem' }}>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>posted</span>
-            <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>{sortedPosted.length} reel{sortedPosted.length !== 1 ? 's' : ''}</span>
-          </div>
-          {/* Sort filters */}
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' as const }}>
-            {SORT_OPTIONS.map(opt => (
-              <button key={opt.key} onClick={() => setSort(opt.key)} style={{
-                cursor: 'pointer', padding: '0.3rem 0.6rem',
-                fontSize: '0.55rem', letterSpacing: '0.08em', textTransform: 'uppercase' as const,
-                color: sort === opt.key ? 'var(--fg)' : 'var(--faint)',
-                background: sort === opt.key ? 'var(--card)' : 'transparent',
-                border: `1px solid ${sort === opt.key ? 'var(--card-border)' : 'transparent'}`,
-                borderRadius: '6px',
-                transition: 'all 0.15s',
-              }}>
-                {opt.label}
-              </button>
+      <section style={sectionStyle}>
+        <SectionHeader
+          title="posted"
+          subtitle={`${sortedPosted.length} reel${sortedPosted.length !== 1 ? 's' : ''}`}
+          open={openSections.posted}
+          onToggle={() => toggle('posted')}
+          right={openSections.posted ? (
+            <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' as const }} onClick={e => e.stopPropagation()}>
+              {SORT_OPTIONS.map(opt => (
+                <button key={opt.key} onClick={() => setSort(opt.key)} style={{
+                  cursor: 'pointer', padding: '0.25rem 0.5rem',
+                  fontSize: '0.5rem', letterSpacing: '0.08em', textTransform: 'uppercase' as const,
+                  color: sort === opt.key ? 'var(--fg)' : 'var(--faint)',
+                  background: sort === opt.key ? 'var(--card)' : 'transparent',
+                  border: `1px solid ${sort === opt.key ? 'var(--card-border)' : 'transparent'}`,
+                  borderRadius: '6px', transition: 'all 0.15s',
+                }}>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          ) : undefined}
+        />
+        {openSections.posted && (
+          <div style={{ display: 'flex', flexDirection: 'column', marginTop: '1.5rem' }}>
+            {sortedPosted.map((reel, i, arr) => (
+              <div key={reel.id} style={{ display: 'grid', gridTemplateColumns: '60px 1fr', gap: '2rem', padding: '1.75rem 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                <div style={{ paddingTop: '0.15rem' }}>
+                  <span style={{ fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--faint)' }}>#{String(i + 1).padStart(2, '0')}</span>
+                </div>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' as const, marginBottom: '0.5rem' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.55rem', color: '#22c55e' }}>
+                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
+                      posted
+                    </span>
+                    <span style={{ fontSize: '0.55rem', color: 'var(--faint)' }}>{reel.date}</span>
+                    {reel.duration && <span style={{ fontSize: '0.55rem', color: 'var(--faint)' }}>{reel.duration}s</span>}
+                    {(() => {
+                      const ct = (reel as { content_type?: string }).content_type
+                      const cfg = ct ? CONTENT_TYPE_CONFIG[ct] : null
+                      return cfg ? (
+                        <span style={{ fontSize: '0.48rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: cfg.color, background: `${cfg.color}15`, border: `1px solid ${cfg.color}30`, borderRadius: '999px', padding: '0.1rem 0.45rem' }}>{cfg.label}</span>
+                      ) : null
+                    })()}
+                  </div>
+                  <h2 style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: '1.3rem', letterSpacing: '-0.01em', lineHeight: 1.15, marginBottom: '0.35rem' }}>{reel.title}</h2>
+                  <p style={{ fontSize: '0.65rem', color: 'var(--muted)', lineHeight: 1.8, maxWidth: '52ch', marginBottom: '0.35rem' }}>{reel.topic}</p>
+                  {reel.notes && <p style={{ fontSize: '0.6rem', color: 'var(--faint)', fontStyle: 'italic' }}>{reel.notes}</p>}
+                  {reel.stats && (
+                    <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '1.25rem', marginTop: '1rem', padding: '0.875rem', background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '8px' }}>
+                      {[
+                        { label: 'views',        value: reel.stats.views.toLocaleString() },
+                        { label: 'likes',        value: reel.stats.likes.toLocaleString() },
+                        { label: 'shares',       value: reel.stats.shares.toLocaleString() },
+                        { label: 'saves',        value: reel.stats.saves.toLocaleString() },
+                        { label: 'interactions', value: reel.stats.interactions.toLocaleString() },
+                      ].map(s => (
+                        <div key={s.label}>
+                          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1rem', fontWeight: 400 }}>{s.value}</div>
+                          <div style={{ fontSize: '0.48rem', color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' as const }}>{s.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {sortedPosted.map((reel, i, arr) => (
-            <div key={reel.id} style={{ display: 'grid', gridTemplateColumns: '60px 1fr', gap: '2rem', padding: '1.75rem 0', borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none' }}>
-              <div style={{ paddingTop: '0.15rem' }}>
-                <span style={{ fontSize: '0.55rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: 'var(--faint)' }}>#{String(i + 1).padStart(2, '0')}</span>
-              </div>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' as const, marginBottom: '0.5rem' }}>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.55rem', color: '#22c55e' }}>
-                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#22c55e', display: 'inline-block' }} />
-                    posted
-                  </span>
-                  <span style={{ fontSize: '0.55rem', color: 'var(--faint)' }}>{reel.date}</span>
-                  {reel.duration && <span style={{ fontSize: '0.55rem', color: 'var(--faint)' }}>{reel.duration}s</span>}
-                </div>
-                <h2 style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: '1.3rem', letterSpacing: '-0.01em', lineHeight: 1.15, marginBottom: '0.35rem' }}>{reel.title}</h2>
-                <p style={{ fontSize: '0.65rem', color: 'var(--muted)', lineHeight: 1.8, maxWidth: '52ch', marginBottom: '0.35rem' }}>{reel.topic}</p>
-                {reel.notes && <p style={{ fontSize: '0.6rem', color: 'var(--faint)', fontStyle: 'italic' }}>{reel.notes}</p>}
-                {reel.stats && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: '1.25rem', marginTop: '1rem', padding: '0.875rem', background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '8px' }}>
-                    {[
-                      { label: 'views',        value: reel.stats.views.toLocaleString() },
-                      { label: 'likes',        value: reel.stats.likes.toLocaleString() },
-                      { label: 'shares',       value: reel.stats.shares.toLocaleString() },
-                      { label: 'saves',        value: reel.stats.saves.toLocaleString() },
-                      { label: 'interactions', value: reel.stats.interactions.toLocaleString() },
-                    ].map(s => (
-                      <div key={s.label}>
-                        <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1rem', fontWeight: 400 }}>{s.value}</div>
-                        <div style={{ fontSize: '0.48rem', color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' as const }}>{s.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        )}
       </section>
 
       {/* Content Calendar */}
-      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 2.5rem 3rem', borderTop: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '1.5rem' }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>content calendar</span>
-          <span style={{ fontSize: '0.6rem', color: 'var(--muted)' }}>when + what type</span>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '0.875rem' }}>
-          {calendarReels.map(reel => {
-            const ct = (reel as { content_type?: string }).content_type || 'uncategorized'
-            const cfg = CONTENT_TYPE_CONFIG[ct] ?? { label: ct, color: '#999', bg: 'rgba(150,150,150,0.08)' }
-            return (
-              <div key={reel.id} style={{ background: cfg.bg, border: `1px solid ${cfg.color}22`, borderRadius: '10px', padding: '0.875rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.52rem', color: 'var(--faint)', letterSpacing: '0.08em' }}>{reel.date}</span>
-                  <span style={{ fontSize: '0.5rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: cfg.color, background: `${cfg.color}18`, border: `1px solid ${cfg.color}33`, borderRadius: '999px', padding: '0.1rem 0.45rem' }}>{cfg.label}</span>
-                </div>
-                <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '0.85rem', fontWeight: 400, lineHeight: 1.25, marginBottom: '0.6rem' }}>{reel.title}</p>
-                {reel.stats && (
-                  <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.52rem', color: 'var(--muted)' }}>
-                    <span>👁 {reel.stats.views.toLocaleString()}</span>
-                    <span>💾 {reel.stats.saves}</span>
-                    <span>📤 {reel.stats.shares}</span>
-                  </div>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      </section>
-
-      {/* Content Type Breakdown */}
-      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '2rem 2.5rem 3rem', borderTop: '1px solid var(--border)' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.35rem' }}>
-          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.2rem' }}>content type breakdown</span>
-        </div>
-        <p style={{ fontSize: '0.6rem', color: 'var(--muted)', marginBottom: '1.5rem' }}>what kind of account are you building?</p>
-
-        {/* Type cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
-          {Object.entries(typeBreakdown).map(([type, stats]) => {
-            const cfg = CONTENT_TYPE_CONFIG[type] ?? { label: type, color: '#999', bg: 'rgba(150,150,150,0.08)' }
-            const pct = Math.round((stats.count / postedReels.length) * 100)
-            return (
-              <div key={type} style={{ background: cfg.bg, border: `1px solid ${cfg.color}33`, borderRadius: '10px', padding: '1.25rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.52rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: cfg.color }}>{cfg.label}</span>
-                  <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.5rem', color: cfg.color }}>{stats.count}</span>
-                </div>
-                {/* Progress bar */}
-                <div style={{ height: '3px', background: `${cfg.color}20`, borderRadius: '999px', marginBottom: '0.875rem' }}>
-                  <div style={{ height: '3px', width: `${pct}%`, background: cfg.color, borderRadius: '999px' }} />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '0.3rem', fontSize: '0.55rem', color: 'var(--muted)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>views</span><span style={{ color: 'var(--fg)', fontWeight: 500 }}>{stats.views.toLocaleString()}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>saves</span><span style={{ color: cfg.color, fontWeight: 500 }}>{stats.saves.toLocaleString()}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span>shares</span><span style={{ color: 'var(--fg)', fontWeight: 500 }}>{stats.shares.toLocaleString()}</span>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${cfg.color}22`, paddingTop: '0.3rem', marginTop: '0.1rem' }}>
-                    <span>mix %</span><span style={{ color: cfg.color, fontWeight: 600 }}>{pct}%</span>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Target mix */}
-        <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '10px', padding: '1.25rem' }}>
-          <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: 'var(--muted)', marginBottom: '1rem' }}>target mix</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
-            {[
-              { type: 'useful',        target: 40 },
-              { type: 'news',          target: 30 },
-              { type: 'entertainment', target: 20 },
-              { type: 'bookmark',      target: 10 },
-            ].map(({ type, target }) => {
-              const cfg = CONTENT_TYPE_CONFIG[type]
-              const current = typeBreakdown[type] ? Math.round((typeBreakdown[type].count / postedReels.length) * 100) : 0
-              const diff = current - target
+      <section style={sectionStyle}>
+        <SectionHeader
+          title="content calendar"
+          subtitle="when + what type"
+          open={openSections.calendar}
+          onToggle={() => toggle('calendar')}
+        />
+        {openSections.calendar && (
+          <div style={{ marginTop: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '0.875rem' }}>
+            {calendarReels.map(reel => {
+              const ct = (reel as { content_type?: string }).content_type || 'uncategorized'
+              const cfg = CONTENT_TYPE_CONFIG[ct] ?? { label: ct, color: '#999', bg: 'rgba(150,150,150,0.08)' }
               return (
-                <div key={type} style={{ textAlign: 'center' as const }}>
-                  <div style={{ fontSize: '0.5rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: cfg.color, marginBottom: '0.35rem' }}>{type}</div>
-                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.4rem', color: 'var(--fg)' }}>{current}%</div>
-                  <div style={{ fontSize: '0.5rem', color: 'var(--faint)', marginTop: '0.15rem' }}>target {target}%</div>
-                  {diff !== 0 && (
-                    <div style={{ fontSize: '0.48rem', marginTop: '0.2rem', color: diff > 0 ? '#f59e0b' : '#6b8cff', fontWeight: 600 }}>
-                      {diff > 0 ? `↑ ${diff}% over` : `↓ ${Math.abs(diff)}% under`}
+                <div key={reel.id} style={{ background: cfg.bg, border: `1px solid ${cfg.color}22`, borderRadius: '10px', padding: '0.875rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                    <span style={{ fontSize: '0.52rem', color: 'var(--faint)', letterSpacing: '0.08em' }}>{reel.date}</span>
+                    <span style={{ fontSize: '0.5rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: cfg.color, background: `${cfg.color}18`, border: `1px solid ${cfg.color}33`, borderRadius: '999px', padding: '0.1rem 0.45rem' }}>{cfg.label}</span>
+                  </div>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '0.85rem', fontWeight: 400, lineHeight: 1.25, marginBottom: '0.6rem' }}>{reel.title}</p>
+                  {reel.stats && (
+                    <div style={{ display: 'flex', gap: '0.75rem', fontSize: '0.52rem', color: 'var(--muted)' }}>
+                      <span>👁 {reel.stats.views.toLocaleString()}</span>
+                      <span>💾 {reel.stats.saves}</span>
+                      <span>📤 {reel.stats.shares}</span>
                     </div>
                   )}
                 </div>
               )
             })}
           </div>
-        </div>
+        )}
       </section>
 
-      {/* Rules Drawer */}
-      <section style={{ maxWidth: '1200px', width: '100%', margin: '0 auto', padding: '0 2.5rem 4rem', borderTop: '1px solid var(--border)' }}>
-        <div style={{ paddingTop: '2.5rem' }}>
-          <button onClick={() => setRulesOpen(!rulesOpen)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: 0, width: '100%', textAlign: 'left' as const, color: 'var(--fg)' }}>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontWeight: 400, fontSize: '1.2rem' }}>Ray&apos;s {rulesData.length} rules for growth</span>
-            <span style={{ fontSize: '0.8rem', color: 'var(--muted)', display: 'inline-block', transform: rulesOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>▾</span>
-          </button>
-          <p style={{ fontSize: '0.62rem', color: 'var(--muted)', marginTop: '0.4rem' }}>learned from your data. updated every 10 reels.</p>
-          {rulesOpen && (
-            <div style={{ marginTop: '2rem' }}>
-              {rulesData.map((rule, i) => (
-                <div key={rule.id} style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: '1.5rem', padding: '1.5rem 0', borderTop: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', color: 'var(--faint)', paddingTop: '0.1rem' }}>{String(i + 1).padStart(2, '0')}</span>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.35rem' }}>
-                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: RULE_STATUS_COLOR[rule.status] ?? '#999', display: 'inline-block' }} />
-                      <span style={{ fontSize: '0.55rem', color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' as const }}>{rule.status}</span>
+      {/* Content Type Breakdown */}
+      <section style={sectionStyle}>
+        <SectionHeader
+          title="content type breakdown"
+          subtitle="what kind of account are you building?"
+          open={openSections.breakdown}
+          onToggle={() => toggle('breakdown')}
+        />
+        {openSections.breakdown && (
+          <div style={{ marginTop: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+              {Object.entries(typeBreakdown).map(([type, stats]) => {
+                const cfg = CONTENT_TYPE_CONFIG[type] ?? { label: type, color: '#999', bg: 'rgba(150,150,150,0.08)' }
+                const pct = Math.round((stats.count / postedReels.length) * 100)
+                return (
+                  <div key={type} style={{ background: cfg.bg, border: `1px solid ${cfg.color}33`, borderRadius: '10px', padding: '1.25rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                      <span style={{ fontSize: '0.52rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: cfg.color }}>{cfg.label}</span>
+                      <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.5rem', color: cfg.color }}>{stats.count}</span>
                     </div>
-                    <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1rem', fontWeight: 400, lineHeight: 1.3, marginBottom: '0.35rem' }}>{rule.rule}</p>
-                    <p style={{ fontSize: '0.62rem', color: 'var(--muted)', lineHeight: 1.8 }}>{rule.reason}</p>
+                    <div style={{ height: '3px', background: `${cfg.color}20`, borderRadius: '999px', marginBottom: '0.875rem' }}>
+                      <div style={{ height: '3px', width: `${pct}%`, background: cfg.color, borderRadius: '999px' }} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column' as const, gap: '0.3rem', fontSize: '0.55rem', color: 'var(--muted)' }}>
+                      {[
+                        { l: 'views',  v: stats.views.toLocaleString(),  c: 'var(--fg)' },
+                        { l: 'saves',  v: stats.saves.toLocaleString(),  c: cfg.color   },
+                        { l: 'shares', v: stats.shares.toLocaleString(), c: 'var(--fg)' },
+                      ].map(({ l, v, c }) => (
+                        <div key={l} style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>{l}</span><span style={{ color: c, fontWeight: 500 }}>{v}</span>
+                        </div>
+                      ))}
+                      <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: `1px solid ${cfg.color}22`, paddingTop: '0.3rem', marginTop: '0.1rem' }}>
+                        <span>mix %</span><span style={{ color: cfg.color, fontWeight: 600 }}>{pct}%</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
-          )}
-        </div>
+
+            {/* Target mix */}
+            <div style={{ background: 'var(--card)', border: '1px solid var(--card-border)', borderRadius: '10px', padding: '1.25rem' }}>
+              <p style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: 'var(--muted)', marginBottom: '1rem' }}>target mix</p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+                {[
+                  { type: 'useful', target: 40 },
+                  { type: 'news', target: 30 },
+                  { type: 'entertainment', target: 20 },
+                  { type: 'bookmark', target: 10 },
+                ].map(({ type, target }) => {
+                  const cfg = CONTENT_TYPE_CONFIG[type]
+                  const current = typeBreakdown[type] ? Math.round((typeBreakdown[type].count / postedReels.length) * 100) : 0
+                  const diff = current - target
+                  return (
+                    <div key={type} style={{ textAlign: 'center' as const }}>
+                      <div style={{ fontSize: '0.5rem', letterSpacing: '0.12em', textTransform: 'uppercase' as const, color: cfg.color, marginBottom: '0.35rem' }}>{type}</div>
+                      <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1.4rem', color: 'var(--fg)' }}>{current}%</div>
+                      <div style={{ fontSize: '0.5rem', color: 'var(--faint)', marginTop: '0.15rem' }}>target {target}%</div>
+                      {diff !== 0 && (
+                        <div style={{ fontSize: '0.48rem', marginTop: '0.2rem', color: diff > 0 ? '#f59e0b' : '#6b8cff', fontWeight: 600 }}>
+                          {diff > 0 ? `↑ ${diff}% over` : `↓ ${Math.abs(diff)}% under`}
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Rules */}
+      <section style={{ ...sectionStyle, paddingBottom: '4rem' }}>
+        <SectionHeader
+          title={<>Ray&apos;s {rulesData.length} rules for growth</>}
+          subtitle="learned from your data. updated every 10 reels."
+          open={openSections.rules}
+          onToggle={() => toggle('rules')}
+        />
+        {openSections.rules && (
+          <div style={{ marginTop: '2rem' }}>
+            {rulesData.map((rule, i) => (
+              <div key={rule.id} style={{ display: 'grid', gridTemplateColumns: '48px 1fr', gap: '1.5rem', padding: '1.5rem 0', borderTop: '1px solid var(--border)' }}>
+                <span style={{ fontSize: '0.6rem', letterSpacing: '0.12em', color: 'var(--faint)', paddingTop: '0.1rem' }}>{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.35rem' }}>
+                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: RULE_STATUS_COLOR[rule.status] ?? '#999', display: 'inline-block' }} />
+                    <span style={{ fontSize: '0.55rem', color: 'var(--faint)', letterSpacing: '0.1em', textTransform: 'uppercase' as const }}>{rule.status}</span>
+                  </div>
+                  <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: '1rem', fontWeight: 400, lineHeight: 1.3, marginBottom: '0.35rem' }}>{rule.rule}</p>
+                  <p style={{ fontSize: '0.62rem', color: 'var(--muted)', lineHeight: 1.8 }}>{rule.reason}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Footer */}
