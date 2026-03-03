@@ -1,5 +1,40 @@
 [
   {
+    "id": "12",
+    "title": "What if you never had to pay for AI again",
+    "topic": "Qwen 3.5 Small — runs on your phone, offline, free forever. No API, no subscription, no internet.",
+    "status": "audio_done",
+    "date": "2026-03-03",
+    "duration": 28,
+    "content_type": "useful",
+    "audioLink": "/reel-paglu/output/qwen-mobile-ai.mp3",
+    "videoLink": "",
+    "brollLinks": [
+      "https://github.com/QwenLM/Qwen3.5",
+      "https://awesomeagents.ai/news/qwen-3-5-small-models-series/",
+      "https://www.marktechpost.com/2026/02/24/alibaba-qwen-team-releases-qwen-3-5-medium-model-series-a-production-powerhouse-proving-that-smaller-ai-models-are-smarter/"
+    ],
+    "notes": "Hook: 'What if you never had to pay for AI again.' Mobile AI ownership angle. Visual: phone on airplane mode running AI, ChatGPT subscription screen comparison.",
+    "stats": null
+  },
+  {
+    "id": "11",
+    "title": "Put your phone on airplane mode — now ask it anything",
+    "topic": "Qwen 3.5 Small — offline AI on your phone. No internet. No bill. Beats GPT-5 Nano.",
+    "status": "script_done",
+    "date": "2026-03-03",
+    "duration": 27,
+    "content_type": "useful",
+    "audioLink": "",
+    "videoLink": "",
+    "brollLinks": [
+      "https://github.com/QwenLM/Qwen3.5",
+      "https://awesomeagents.ai/news/qwen-3-5-small-models-series/"
+    ],
+    "notes": "Hook: 'Put your phone on airplane mode. Now ask it anything.' Airplane mode angle — stronger scenario hook. Alternative version of Qwen reel.",
+    "stats": null
+  },
+  {
     "id": "10",
     "title": "Your phone is about to become the dumbest thing you own",
     "topic": "Qualcomm Snapdragon Wear Elite — on-device AI on your wrist, end of the phone era",
