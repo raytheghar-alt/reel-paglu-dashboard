@@ -214,15 +214,15 @@
     "audioLink": "",
     "videoLink": "",
     "brollLinks": [],
-    "notes": "12h stats: 6,636 views, 95.3% non-follower. 249 saves, 164 shares. Save:Share ~1.5:1. Reels tab 77.2%. High saves but low profile activity = bookmark reel.",
+    "notes": "24h final. 20,646 views. 97.5% non-follower. 745 saves, 625 shares — highest ever. 47 follows = best profile activity. Curve went vertical on Mar 3. Reels tab 78%, Explore 15%. Algorithm fully picked it up.",
     "stats": {
-      "views": 6636,
-      "likes": 125,
-      "comments": 2,
-      "shares": 164,
-      "saves": 249,
-      "interactions": 543,
-      "profile_activity": 10
+      "views": 20646,
+      "likes": 372,
+      "comments": 13,
+      "shares": 625,
+      "saves": 745,
+      "interactions": 1759,
+      "profile_activity": 47
     }
   }
 ]
